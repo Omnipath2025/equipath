@@ -69,7 +69,7 @@ This project is led by Contessa Petrini, working at the intersection of traditio
 
 For questions regarding this application or technical implementation, please contact:
 - Email: contessapetrini@cloakandquill.org
-- GitHub: [@ProfessorP28](https://github.com/ProfessorP28)
+- GitHub: [@OmniPath2025](https://github.com/OmniPath2025)
 - LinkedIn: [Contessa Petrini](https://linkedin.com/in/ContessaPetrini)
 
 ## License
