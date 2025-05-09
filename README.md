@@ -1,6 +1,5 @@
 # EquiPath: Privacy-Preserving Knowledge Verification System
 
-![EquiPath Banner](https://via.placeholder.com/800x200?text=EquiPath+zk-SNARK+Verification+System)
 
 ## Project Overview
 
