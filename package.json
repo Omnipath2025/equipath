@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Privacy-preserving verification protocol for traditional knowledge protection on Ethereum",
   "main": "sdk/core/src/index.ts",
- "scripts": {
+  "scripts": {
     "build": "tsc",
     "compile": "hardhat compile",
     "test": "hardhat test",
@@ -15,8 +15,7 @@
     "format": "prettier --write .",
     "dev": "npm run circuits:compile && npm run compile",
     "full-test": "npm run circuits:compile && npm run compile && npm test"
-}
-
+  },
   "keywords": [
     "ethereum",
     "zk-snarks",
@@ -40,7 +39,7 @@
     "@nomicfoundation/hardhat-toolbox": "^3.0.2",
     "eslint": "^8.47.0",
     "prettier": "^3.0.2",
-    "circom": "^2.1.6"
+    "circom": "^2.1.6",
     "circomlib": "^2.0.5"
   },
   "engines": {
