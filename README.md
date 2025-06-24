@@ -203,6 +203,89 @@ protectSensitiveData(cultural: CulturalContext): Promise<PrivacyLayer>;
   - feature_request.md
 - pull_request_template.md
 
+## Quick Start & Testing
+
+### Prerequisites
+- Node.js 16+ installed
+- npm or yarn package manager
+- Git for cloning the repository
+
+### Installation & Setup
+
+1. **Clone the repository:**
+   
+git clone https://github.com/Omnipath2025/equipath.git
+cd equipath
+
+3. **Install dependencies:**
+   
+npm install
+
+
+4. **Run basic integration test:**
+
+node test-basic.js
+
+
+### Expected Output
+When you run the basic test, you should see:
+🚀 Starting EquiPath Basic Integration Test
+✅ Test 1: Ethers.js library loaded successfully
+✅ Test 2: Provider created successfully
+✅ Test 3: Test wallet generated
+✅ Test 4: Knowledge content hashing
+✅ Test 5: Cultural context encoding
+✅ Test 6: Mock zk-SNARK proof structure created
+✅ Test 7: Smart contract event signature
+🎉 All basic tests passed!
+
+### Core Components Testing
+
+**zk-SNARK Circuit Testing:**
+
+Compile the knowledge verification circuit
+npm run circuits:compile
+
+Run circuit-specific tests
+npm test circuits/
+
+**Smart Contract Testing:**
+
+Compile smart contracts
+npm run compile
+
+Run contract tests
+npm run test
+
+**SDK Testing:**
+Run TypeScript SDK tests
+npm test sdk/
+
+### ESP Grant Deliverables Status
+
+✅ **zk-SNARK Circuits** - `circuits/verification/knowledge_verification.circom`
+✅ **Smart Contracts** - `contracts/core/EquiPathVerifier.sol`  
+✅ **Developer SDK** - `sdk/core/src/verifier.ts`
+✅ **Basic Testing** - `test-basic.js` and `sdk/core/test/verifier.test.ts`
+✅ **Documentation** - Complete setup and usage instructions
+
+### Integration with OmniPath Ecosystem
+
+This EquiPath protocol serves as the **zero-knowledge verification layer** for the broader OmniPath ecosystem:
+
+- **EthnoPath Integration**: Receives traditional knowledge contributions for privacy-preserving verification
+- **BioPath Integration**: Provides verified attributions for bias-corrected validation  
+- **FundPath Integration**: Enables equitable compensation based on verified contributions
+- **MetaPath Integration**: Participates in event-driven workflow orchestration
+
+### Development Workflow
+
+1. **Local Development**: Use `test-basic.js` for quick validation
+2. **Circuit Development**: Modify circuits in `circuits/verification/`
+3. **Contract Development**: Update contracts in `contracts/core/`
+4. **SDK Development**: Enhance SDK in `sdk/core/src/`
+5. **Testing**: Run comprehensive tests before deployment
+
 
 
 ## 🎯 ESP Grant Deliverables
