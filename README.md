@@ -85,110 +85,113 @@ protectSensitiveData(cultural: CulturalContext): Promise<PrivacyLayer>;
 ## 📦 Repository Structure
 
 equipath-protocol/
-├── README.md # Main documentation
-├── LICENSE # MIT License
-├── .gitignore # Standard Node.js gitignore
-├── package.json # Project dependencies
-├── hardhat.config.js # Ethereum development config
-├── .env.example # Environment variables template
-│
-├── circuits/ # 🔐 zk-SNARK Circuits (Core ESP Deliverable)
-│ ├── verification/
-│ │ ├── knowledge_verification.circom
-│ │ ├── attribution_proof.circom
-│ │ └── privacy_layer.circom
-│ ├── utils/
-│ │ ├── poseidon_hash.circom
-│ │ └── merkle_tree.circom
-│ ├── tests/
-│ │ ├── verification.test.js
-│ │ └── privacy.test.js
-│ ├── build/ # Compiled circuits
-│ └── README.md
-│
-├── contracts/ # 📝 Smart Contracts (ESP Infrastructure)
-│ ├── core/
-│ │ ├── EquiPathVerifier.sol # Main verification contract
-│ │ ├── ProofRegistry.sol # Proof storage and retrieval
-│ │ └── PrivacyLayer.sol # Privacy-preserving interfaces
-│ ├── interfaces/
-│ │ ├── IEquiPathVerifier.sol
-│ │ └── IProofRegistry.sol
-│ ├── libraries/
-│ │ ├── ZKProofUtils.sol
-│ │ └── PrivacyUtils.sol
-│ ├── test/
-│ │ ├── EquiPathVerifier.test.js
-│ │ └── integration.test.js
-│ └── README.md
-│
-├── sdk/ # 🛠️ Developer SDK (ESP Builder Tools)
-│ ├── core/
-│ │ ├── src/
-│ │ │ ├── verifier.ts # Main verification interface
-│ │ │ ├── proof-generator.ts # ZK proof generation
-│ │ │ ├── privacy.ts # Privacy utilities
-│ │ │ └── types.ts # TypeScript definitions
-│ │ ├── test/
-│ │ ├── package.json
-│ │ └── README.md
-│ ├── examples/ # Usage examples
-│ │ ├── basic-verification/
-│ │ ├── web-integration/
-│ │ └── node-cli/
-│ └── docs/ # SDK documentation
-│ ├── api-reference.md
-│ └── integration-guide.md
-│
-├── scripts/ # 🚀 Development & Deployment
-│ ├── deploy/
-│ │ ├── deploy-testnet.js
-│ │ └── deploy-mainnet.js
-│ ├── setup/
-│ │ ├── compile-circuits.js
-│ │ ├── generate-keys.js
-│ │ └── setup-environment.js
-│ └── utils/
-│ ├── verify-deployment.js
-│ └── gas-optimization.js
-│
-├── docs/ # 📚 Technical Documentation
-│ ├── architecture/
-│ │ ├── overview.md
-│ │ ├── zk-circuits.md
-│ │ └── smart-contracts.md
-│ ├── tutorials/
-│ │ ├── quick-start.md
-│ │ ├── integration-guide.md
-│ │ └── advanced-usage.md
-│ ├── research/
-│ │ ├── whitepaper.md
-│ │ └── technical-specifications.md
-│ └── community/
-│ ├── contributing.md
-│ ├── code-of-conduct.md
-│ └── governance.md
-│
-├── test/ # 🧪 Comprehensive Testing
-│ ├── integration/
-│ │ ├── full-workflow.test.js
-│ │ └── cross-contract.test.js
-│ ├── performance/
-│ │ ├── gas-benchmarks.test.js
-│ │ └── proof-generation.test.js
-│ └── security/
-│ ├── access-control.test.js
-│ └── privacy-guarantees.test.js
-│
-└── .github/ # 🔄 GitHub Actions & Templates
-├── workflows/
-│ ├── ci.yml # Continuous Integration
-│ ├── deploy-testnet.yml # Automated deployment
-│ └── security-audit.yml # Security checks
-├── ISSUE_TEMPLATE/
-│ ├── bug_report.md
-│ └── feature_request.md
-└── pull_request_template.md
+├── README.md # Main documentatio## 📦 Repository Structure
+
+**equipath-protocol/**  
+├── README.md                          *(Main documentation)*  
+├── LICENSE                            *(MIT License)*  
+├── .gitignore                         *(Standard Node.js gitignore)*  
+├── package.json                       *(Project dependencies)*  
+├── hardhat.config.js                  *(Ethereum development config)*  
+├── .env.example                       *(Environment variables template)*  
+│  
+├── **circuits/**                          *🔐 zk-SNARK Circuits (Core ESP Deliverable)*  
+│   ├── verification/  
+│   │   ├── knowledge_verification.circom  
+│   │   ├── attribution_proof.circom  
+│   │   └── privacy_layer.circom  
+│   ├── utils/  
+│   │   ├── poseidon_hash.circom  
+│   │   └── merkle_tree.circom  
+│   ├── tests/  
+│   │   ├── verification.test.js  
+│   │   └── privacy.test.js  
+│   ├── build/                         *(Compiled circuits)*  
+│   └── README.md  
+│  
+├── **contracts/**                         *📝 Smart Contracts (ESP Infrastructure)*  
+│   ├── core/  
+│   │   ├── EquiPathVerifier.sol       *(Main verification contract)*  
+│   │   ├── ProofRegistry.sol          *(Proof storage and retrieval)*  
+│   │   └── PrivacyLayer.sol           *(Privacy-preserving interfaces)*  
+│   ├── interfaces/  
+│   │   ├── IEquiPathVerifier.sol  
+│   │   └── IProofRegistry.sol  
+│   ├── libraries/  
+│   │   ├── ZKProofUtils.sol  
+│   │   └── PrivacyUtils.sol  
+│   ├── test/  
+│   │   ├── EquiPathVerifier.test.js  
+│   │   └── integration.test.js  
+│   └── README.md  
+│  
+├── **sdk/**                               *🛠️ Developer SDK (ESP Builder Tools)*  
+│   ├── core/  
+│   │   ├── src/  
+│   │   │   ├── verifier.ts            *(Main verification interface)*  
+│   │   │   ├── proof-generator.ts     *(ZK proof generation)*  
+│   │   │   ├── privacy.ts             *(Privacy utilities)*  
+│   │   │   └── types.ts               *(TypeScript definitions)*  
+│   │   ├── test/  
+│   │   ├── package.json  
+│   │   └── README.md  
+│   ├── examples/                      *(Usage examples)*  
+│   │   ├── basic-verification/  
+│   │   ├── web-integration/  
+│   │   └── node-cli/  
+│   └── docs/                          *(SDK documentation)*  
+│       ├── api-reference.md  
+│       └── integration-guide.md  
+│  
+├── **scripts/**                           *🚀 Development & Deployment*  
+│   ├── deploy/  
+│   │   ├── deploy-testnet.js  
+│   │   └── deploy-mainnet.js  
+│   ├── setup/  
+│   │   ├── compile-circuits.js  
+│   │   ├── generate-keys.js  
+│   │   └── setup-environment.js  
+│   └── utils/  
+│       ├── verify-deployment.js  
+│       └── gas-optimization.js  
+│  
+├── **docs/**                              *📚 Technical Documentation*  
+│   ├── architecture/  
+│   │   ├── overview.md  
+│   │   ├── zk-circuits.md  
+│   │   └── smart-contracts.md  
+│   ├── tutorials/  
+│   │   ├── quick-start.md  
+│   │   ├── integration-guide.md  
+│   │   └── advanced-usage.md  
+│   ├── research/  
+│   │   ├── whitepaper.md  
+│   │   └── technical-specifications.md  
+│   └── community/  
+│       ├── contributing.md  
+│       ├── code-of-conduct.md  
+│       └── governance.md  
+│  
+├── **test/**                              *🧪 Comprehensive Testing*  
+│   ├── integration/  
+│   │   ├── full-workflow.test.js  
+│   │   └── cross-contract.test.js  
+│   ├── performance/  
+│   │   ├── gas-benchmarks.test.js  
+│   │   └── proof-generation.test.js  
+│   └── security/  
+│       ├── access-control.test.js  
+│       └── privacy-guarantees.test.js  
+│  
+└── **.github/**                           *🔄 GitHub Actions & Templates*  
+    ├── workflows/  
+    │   ├── ci.yml                     *(Continuous Integration)*  
+    │   ├── deploy-testnet.yml         *(Automated deployment)*  
+    │   └── security-audit.yml         *(Security checks)*  
+    ├── ISSUE_TEMPLATE/  
+    │   ├── bug_report.md  
+    │   └── feature_request.md  
+    └── pull_request_template.md
 
 
 ## 🎯 ESP Grant Deliverables
