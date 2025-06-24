@@ -124,9 +124,10 @@ Privacy-First: Contributor identities protected by default
 📜 License
 This project is licensed under the MIT License - see LICENSE file.
 All components in this repository are open-source public goods. Commercial applications may integrate these components according to MIT License terms.
+
 🙏 Acknowledgments
 
-Ethereum Foundation for Small Grant support
+
 Traditional knowledge communities for inspiration
 Open-source contributors and reviewers
 
