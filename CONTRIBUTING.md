@@ -382,8 +382,8 @@ Brief description of changes and motivation
 
 ### Maintainer Contact
 - **Technical Issues**: Create GitHub issue with detailed information
-- **Security Concerns**: Email security@equipath.org with details
-- **Partnership Inquiries**: Email partnerships@equipath.org
+- **Security Concerns**: Email security@cloakandquill.org with details
+- **Partnership Inquiries**: Email partnerships@cloakandquill.org
 - **General Questions**: Start discussion in GitHub Discussions
 
 ---
