@@ -1,24 +1,8 @@
-// Fix for ethers.js v6 compatibility
-let ethers;
-try {
-    // Try ethers v6 import style
-    ethers = require('ethers');
-    if (!ethers.JsonRpcProvider) {
-        // Fallback for ethers v5
-        ethers.JsonRpcProvider = ethers.providers.JsonRpcProvider;
-        ethers.keccak256 = ethers.utils.keccak256;
-        ethers.toUtf8Bytes = ethers.utils.toUtf8Bytes;
-        ethers.formatBytes32String = ethers.utils.formatBytes32String;
-        ethers.id = ethers.utils.id;
-    }
-} catch (error) {
-    console.error('❌ Ethers.js not found. Please install with: npm install ethers');
-    process.exit(1);
-}
+const { ethers } = require('ethers');
 
 /**
  * Basic integration test for EquiPath protocol
- * Demonstrates core functionality for ESP grant review
+ * Fixed for ethers.js v6 compatibility
  */
 async function runBasicTest() {
     console.log('🚀 Starting EquiPath Basic Integration Test');
@@ -28,7 +12,7 @@ async function runBasicTest() {
         // Test 1: Verify ethers.js is working
         console.log('✅ Test 1: Ethers.js library loaded successfully');
         
-        // Test 2: Create a mock provider (use fallback URL)
+        // Test 2: Create a provider using ethers v6 syntax
         const provider = new ethers.JsonRpcProvider('https://eth-mainnet.alchemyapi.io/v2/demo');
         console.log('✅ Test 2: Provider created successfully');
         
@@ -37,15 +21,15 @@ async function runBasicTest() {
         console.log('✅ Test 3: Test wallet generated');
         console.log(`   Address: ${wallet.address}`);
         
-        // Test 4: Test hash generation (simulating knowledge content hashing)
+        // Test 4: Test hash generation (ethers v6 syntax)
         const testContent = 'Traditional medicinal knowledge about healing herbs';
         const contentHash = ethers.keccak256(ethers.toUtf8Bytes(testContent));
         console.log('✅ Test 4: Knowledge content hashing');
         console.log(`   Content Hash: ${contentHash}`);
         
-        // Test 5: Test cultural context encoding
+        // Test 5: Test cultural context encoding (ethers v6 syntax)
         const culturalContext = 'Indigenous-Healing-Traditions';
-        const contextBytes = ethers.formatBytes32String(culturalContext);
+        const contextBytes = ethers.encodeBytes32String(culturalContext);
         console.log('✅ Test 5: Cultural context encoding');
         console.log(`   Context: ${culturalContext}`);
         console.log(`   Encoded: ${contextBytes}`);
@@ -61,7 +45,7 @@ async function runBasicTest() {
         };
         console.log('✅ Test 6: Mock zk-SNARK proof structure created');
         
-        // Test 7: Test event signature generation
+        // Test 7: Test event signature generation (ethers v6 syntax)
         const eventSignature = ethers.id('ContributionVerified(uint256,bytes32,address,bytes32,uint256)');
         console.log('✅ Test 7: Smart contract event signature');
         console.log(`   Signature: ${eventSignature}`);
@@ -72,6 +56,7 @@ async function runBasicTest() {
         
     } catch (error) {
         console.error('❌ Test failed:', error.message);
+        console.error('Stack trace:', error.stack);
         process.exit(1);
     }
 }
