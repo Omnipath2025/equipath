@@ -3,38 +3,34 @@ pragma circom 2.0.0;
 include "circomlib/circuits/poseidon.circom";
 include "circomlib/circuits/comparators.circom";
 
-// Working circuit for traditional knowledge verification
-// Proves knowledge of content without revealing it
+// Working circuit for ESP demonstration
 template KnowledgeVerification() {
-    // Private inputs (witness - kept secret)
-    signal private input knowledgeContent;     // The actual knowledge (private)
-    signal private input contributorSecret;    // Contributor's secret key (private)
+    // Public inputs
+    signal input expectedHash;
+    signal input culturalContext;
     
-    // Public inputs (visible on-chain)
-    signal input expectedHash;                 // Expected hash of knowledge + secret
-    signal input culturalContext;             // Cultural context identifier
+    // Private inputs  
+    signal private input knowledgeContent;
+    signal private input contributorSecret;
     
     // Output
-    signal output verified;                    // 1 if verification passes, 0 otherwise
-    
-    // Component for hashing
-    component hasher = Poseidon(2);
+    signal output verified;
     
     // Hash the private inputs
+    component hasher = Poseidon(2);
     hasher.inputs[0] <== knowledgeContent;
     hasher.inputs[1] <== contributorSecret;
     
-    // Component to check if computed hash equals expected hash
+    // Check if hash matches expected
     component equalCheck = IsEqual();
     equalCheck.in[0] <== hasher.out;
     equalCheck.in[1] <== expectedHash;
     
-    // Output the verification result
+    // Output verification result
     verified <== equalCheck.out;
     
-    // Constraint: verification must pass (this enforces the proof)
+    // Constraint: must verify
     verified === 1;
 }
 
-// Main component - required for compilation
 component main = KnowledgeVerification();
