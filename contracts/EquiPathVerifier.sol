@@ -1,391 +1,189 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+
 /**
  * @title EquiPathVerifier
- * @dev ESP Grant Deliverable: Core verification contract for traditional knowledge attribution
- * @notice Zero-knowledge verification infrastructure for privacy-preserving knowledge attribution
- * @author EquiPath Protocol Team
- * 
- * This contract provides the foundational verification layer for traditional knowledge
- * contributions while maintaining complete privacy of sensitive cultural information.
- * 
- * ESP Grant Alignment:
- * - Infrastructure: Core verification protocol for Ethereum ecosystem
- * - Developer Tools: Reusable verification interfaces for dApp integration
- * - Public Good: Open-source attribution without compensation mechanisms
- * - Research: Novel application of zero-knowledge proofs to cultural IP protection
+ * @dev Core smart contract for privacy-preserving traditional knowledge verification
+ * @notice Integrates with zk-SNARK circuits to verify knowledge contributions
  */
-contract EquiPathVerifier {
+contract EquiPathVerifier is Ownable, ReentrancyGuard {
+    using Counters for Counters.Counter;
     
-    // ============ State Variables ============
+    // Counter for contribution IDs
+    Counters.Counter private _contributionIds;
     
-    /// @dev Version of the verification protocol
-    string public constant VERSION = "1.0.0";
-    
-    /// @dev Verification status enumeration
-    enum VerificationStatus {
-        Pending,
-        Verified,
-        Rejected,
-        Disputed
-    }
-    
-    /// @dev Knowledge contribution structure
+    // Struct to store verified knowledge contributions
     struct KnowledgeContribution {
-        bytes32 contributionHash;     // Hash of contribution content
-        bytes32 culturalContext;      // Cultural context identifier
-        address contributor;          // Contributor address
-        VerificationStatus status;    // Current verification status
-        uint256 timestamp;           // Submission timestamp
-        uint256 verificationCount;   // Number of independent verifications
-        bytes32 attributionProof;    // Zero-knowledge attribution proof
+        bytes32 contributionHash;      // Public hash of contribution
+        bytes32 culturalContext;       // Cultural context identifier
+        bytes32 attributionHash;       // Attribution hash for compensation
+        address contributor;           // Contributor's address
+        uint256 timestamp;            // Verification timestamp
+        bool verified;                // Verification status
+        uint256 compensationAmount;   // Compensation earned
     }
     
-    /// @dev Verifier information structure
-    struct Verifier {
-        bool isActive;               // Verifier status
-        uint256 verificationCount;   // Number of verifications performed
-        uint256 reputationScore;     // Verifier reputation (0-1000)
-        bytes32 qualifications;      // Hashed qualifications
-    }
+    // Mapping from contribution ID to contribution data
+    mapping(uint256 => KnowledgeContribution) public contributions;
     
-    // ============ Storage ============
+    // Mapping from contribution hash to contribution ID
+    mapping(bytes32 => uint256) public contributionHashToId;
     
-    /// @dev Mapping from contribution hash to contribution details
-    mapping(bytes32 => KnowledgeContribution) public contributions;
+    // Mapping to track cultural context authorities
+    mapping(bytes32 => mapping(address => bool)) public culturalAuthorities;
     
-    /// @dev Mapping from contributor address to their contributions
-    mapping(address => bytes32[]) public contributorContributions;
-    
-    /// @dev Mapping from verifier address to verifier details
-    mapping(address => Verifier) public verifiers;
-    
-    /// @dev Array of registered verifier addresses
-    address[] public verifierList;
-    
-    /// @dev Contract owner for administrative functions
-    address public owner;
-    
-    /// @dev Minimum number of verifications required
-    uint256 public constant MIN_VERIFICATIONS = 3;
-    
-    /// @dev Maximum number of verifications allowed
-    uint256 public constant MAX_VERIFICATIONS = 10;
-    
-    // ============ Events ============
-    
-    /// @dev Emitted when a new contribution is submitted
-    event ContributionSubmitted(
+    // Events
+    event ContributionVerified(
+        uint256 indexed contributionId,
         bytes32 indexed contributionHash,
         address indexed contributor,
         bytes32 culturalContext,
         uint256 timestamp
     );
     
-    /// @dev Emitted when a contribution is verified
-    event ContributionVerified(
-        bytes32 indexed contributionHash,
-        address indexed verifier,
-        VerificationStatus status,
-        uint256 verificationCount
+    event CompensationDistributed(
+        uint256 indexed contributionId,
+        address indexed contributor,
+        uint256 amount
     );
     
-    /// @dev Emitted when a verifier is registered
-    event VerifierRegistered(
-        address indexed verifier,
-        bytes32 qualifications,
-        uint256 timestamp
+    event CulturalAuthorityAdded(
+        bytes32 indexed culturalContext,
+        address indexed authority
     );
-    
-    /// @dev Emitted when verification status changes
-    event StatusChanged(
-        bytes32 indexed contributionHash,
-        VerificationStatus oldStatus,
-        VerificationStatus newStatus,
-        uint256 timestamp
-    );
-    
-    // ============ Modifiers ============
-    
-    /// @dev Restricts access to contract owner
-    modifier onlyOwner() {
-        require(msg.sender == owner, "EquiPathVerifier: caller is not owner");
-        _;
-    }
-    
-    /// @dev Restricts access to registered verifiers
-    modifier onlyVerifier() {
-        require(verifiers[msg.sender].isActive, "EquiPathVerifier: caller is not active verifier");
-        _;
-    }
-    
-    /// @dev Validates contribution exists
-    modifier contributionExists(bytes32 contributionHash) {
-        require(
-            contributions[contributionHash].contributor != address(0),
-            "EquiPathVerifier: contribution does not exist"
-        );
-        _;
-    }
-    
-    // ============ Constructor ============
     
     /**
-     * @dev Contract constructor
-     * @notice Initializes the EquiPath verification contract
-     */
-    constructor() {
-        owner = msg.sender;
-    }
-    
-    // ============ Core Verification Functions ============
-    
-    /**
-     * @dev Submit a new knowledge contribution for verification
-     * @param contributionHash Cryptographic hash of the contribution
+     * @dev Verify a knowledge contribution using zk-SNARK proof
+     * @param contributionHash Public hash of the contribution
      * @param culturalContext Cultural context identifier
-     * @param attributionProof Zero-knowledge proof of attribution
-     * @return success True if submission was successful
-     * 
-     * @notice This function enables privacy-preserving submission of traditional knowledge
-     * contributions without revealing the actual content. The contribution hash serves
-     * as a commitment to the knowledge while the attribution proof demonstrates ownership.
+     * @param attributionHash Attribution hash from circuit
+     * @param proofA zk-SNARK proof component A
+     * @param proofB zk-SNARK proof component B
+     * @param proofC zk-SNARK proof component C
+     * @param publicSignals Public signals from the circuit
      */
-    function submitContribution(
+    function verifyContribution(
         bytes32 contributionHash,
         bytes32 culturalContext,
-        bytes32 attributionProof
-    ) external returns (bool success) {
-        // Validate inputs
-        require(contributionHash != bytes32(0), "EquiPathVerifier: invalid contribution hash");
-        require(culturalContext != bytes32(0), "EquiPathVerifier: invalid cultural context");
-        require(attributionProof != bytes32(0), "EquiPathVerifier: invalid attribution proof");
+        bytes32 attributionHash,
+        uint[2] memory proofA,
+        uint[2][2] memory proofB,
+        uint[2] memory proofC,
+        uint[3] memory publicSignals
+    ) external nonReentrant returns (uint256) {
+        require(contributionHash != bytes32(0), "Invalid contribution hash");
+        require(culturalContext != bytes32(0), "Invalid cultural context");
+        require(contributionHashToId[contributionHash] == 0, "Contribution already verified");
         
-        // Ensure contribution doesn't already exist
-        require(
-            contributions[contributionHash].contributor == address(0),
-            "EquiPathVerifier: contribution already exists"
-        );
+        // TODO: Implement actual zk-SNARK verification
+        // For now, we assume verification passes if proof components are provided
+        bool proofValid = _verifyZKProof(proofA, proofB, proofC, publicSignals);
+        require(proofValid, "Invalid zk-SNARK proof");
         
-        // Create new contribution record
-        contributions[contributionHash] = KnowledgeContribution({
+        // Increment contribution counter
+        _contributionIds.increment();
+        uint256 contributionId = _contributionIds.current();
+        
+        // Store the verified contribution
+        contributions[contributionId] = KnowledgeContribution({
             contributionHash: contributionHash,
             culturalContext: culturalContext,
+            attributionHash: attributionHash,
             contributor: msg.sender,
-            status: VerificationStatus.Pending,
             timestamp: block.timestamp,
-            verificationCount: 0,
-            attributionProof: attributionProof
+            verified: true,
+            compensationAmount: 0
         });
         
-        // Add to contributor's contribution list
-        contributorContributions[msg.sender].push(contributionHash);
+        // Map contribution hash to ID
+        contributionHashToId[contributionHash] = contributionId;
         
-        // Emit submission event
-        emit ContributionSubmitted(
+        emit ContributionVerified(
+            contributionId,
             contributionHash,
             msg.sender,
             culturalContext,
             block.timestamp
         );
         
-        return true;
+        return contributionId;
     }
     
     /**
-     * @dev Verify a knowledge contribution using zero-knowledge proof
-     * @param contributionHash Hash of the contribution to verify
-     * @param verificationProof Zero-knowledge verification proof
-     * @param isValid Boolean indicating whether the contribution is valid
-     * @return success True if verification was recorded successfully
-     * 
-     * @notice This function allows registered verifiers to provide verification
-     * without revealing the content of the traditional knowledge. The verification
-     * process maintains privacy while building consensus on attribution.
+     * @dev Add a cultural authority for a specific context
+     * @param culturalContext The cultural context identifier
+     * @param authority The address to grant authority to
      */
-    function verifyContribution(
-        bytes32 contributionHash,
-        bytes32 verificationProof,
-        bool isValid
-    ) external onlyVerifier contributionExists(contributionHash) returns (bool success) {
-        // Validate inputs
-        require(verificationProof != bytes32(0), "EquiPathVerifier: invalid verification proof");
+    function addCulturalAuthority(
+        bytes32 culturalContext,
+        address authority
+    ) external onlyOwner {
+        require(authority != address(0), "Invalid authority address");
+        culturalAuthorities[culturalContext][authority] = true;
         
-        KnowledgeContribution storage contribution = contributions[contributionHash];
-        
-        // Ensure contribution is in pending status
-        require(
-            contribution.status == VerificationStatus.Pending,
-            "EquiPathVerifier: contribution not in pending status"
-        );
-        
-        // Ensure verifier hasn't already verified this contribution
-        // Note: In production, this would require additional mapping to track verifier-contribution pairs
-        
-        // Increment verification count
-        contribution.verificationCount++;
-        
-        // Update verifier statistics
-        verifiers[msg.sender].verificationCount++;
-        
-        // Determine new status based on verification result and count
-        VerificationStatus newStatus = contribution.status;
-        
-        if (isValid && contribution.verificationCount >= MIN_VERIFICATIONS) {
-            newStatus = VerificationStatus.Verified;
-        } else if (!isValid && contribution.verificationCount >= MIN_VERIFICATIONS) {
-            newStatus = VerificationStatus.Rejected;
-        }
-        
-        // Update status if changed
-        if (newStatus != contribution.status) {
-            VerificationStatus oldStatus = contribution.status;
-            contribution.status = newStatus;
-            
-            emit StatusChanged(
-                contributionHash,
-                oldStatus,
-                newStatus,
-                block.timestamp
-            );
-        }
-        
-        // Emit verification event
-        emit ContributionVerified(
-            contributionHash,
-            msg.sender,
-            contribution.status,
-            contribution.verificationCount
-        );
-        
-        return true;
-    }
-    
-    // ============ Verifier Management ============
-    
-    /**
-     * @dev Register a new verifier
-     * @param verifier Address of the verifier to register
-     * @param qualifications Hashed qualifications of the verifier
-     * @return success True if registration was successful
-     */
-    function registerVerifier(
-        address verifier,
-        bytes32 qualifications
-    ) external onlyOwner returns (bool success) {
-        require(verifier != address(0), "EquiPathVerifier: invalid verifier address");
-        require(qualifications != bytes32(0), "EquiPathVerifier: invalid qualifications");
-        require(!verifiers[verifier].isActive, "EquiPathVerifier: verifier already registered");
-        
-        verifiers[verifier] = Verifier({
-            isActive: true,
-            verificationCount: 0,
-            reputationScore: 500, // Start with neutral reputation
-            qualifications: qualifications
-        });
-        
-        verifierList.push(verifier);
-        
-        emit VerifierRegistered(verifier, qualifications, block.timestamp);
-        
-        return true;
+        emit CulturalAuthorityAdded(culturalContext, authority);
     }
     
     /**
-     * @dev Deactivate a verifier
-     * @param verifier Address of the verifier to deactivate
-     * @return success True if deactivation was successful
+     * @dev Distribute compensation to a contributor
+     * @param contributionId The ID of the contribution
+     * @param amount The compensation amount in wei
      */
-    function deactivateVerifier(address verifier) external onlyOwner returns (bool success) {
-        require(verifiers[verifier].isActive, "EquiPathVerifier: verifier not active");
+    function distributeCompensation(
+        uint256 contributionId,
+        uint256 amount
+    ) external payable onlyOwner nonReentrant {
+        require(contributionId <= _contributionIds.current(), "Invalid contribution ID");
+        require(contributions[contributionId].verified, "Contribution not verified");
+        require(msg.value >= amount, "Insufficient payment");
         
-        verifiers[verifier].isActive = false;
+        KnowledgeContribution storage contribution = contributions[contributionId];
+        contribution.compensationAmount += amount;
         
-        return true;
+        // Transfer compensation to contributor
+        payable(contribution.contributor).transfer(amount);
+        
+        emit CompensationDistributed(contributionId, contribution.contributor, amount);
     }
     
-    // ============ View Functions ============
-    
     /**
-     * @dev Get contribution details
-     * @param contributionHash Hash of the contribution
-     * @return contribution Full contribution details
+     * @dev Get contribution details by ID
+     * @param contributionId The contribution ID
+     * @return The contribution data
      */
-    function getContribution(bytes32 contributionHash) 
+    function getContribution(uint256 contributionId) 
         external 
         view 
-        contributionExists(contributionHash) 
-        returns (KnowledgeContribution memory contribution) 
+        returns (KnowledgeContribution memory) 
     {
-        return contributions[contributionHash];
+        require(contributionId <= _contributionIds.current(), "Invalid contribution ID");
+        return contributions[contributionId];
     }
     
     /**
-     * @dev Get contributions by contributor
-     * @param contributor Address of the contributor
-     * @return contributionHashes Array of contribution hashes
+     * @dev Get total number of verified contributions
+     * @return The total count
      */
-    function getContributorContributions(address contributor) 
-        external 
-        view 
-        returns (bytes32[] memory contributionHashes) 
-    {
-        return contributorContributions[contributor];
+    function getTotalContributions() external view returns (uint256) {
+        return _contributionIds.current();
     }
     
     /**
-     * @dev Check if a contribution is verified
-     * @param contributionHash Hash of the contribution
-     * @return isVerified True if the contribution is verified
+     * @dev Internal function to verify zk-SNARK proof
+     * @dev This is a placeholder - actual implementation would use a verifier contract
      */
-    function isContributionVerified(bytes32 contributionHash) 
-        external 
-        view 
-        contributionExists(contributionHash) 
-        returns (bool isVerified) 
-    {
-        return contributions[contributionHash].status == VerificationStatus.Verified;
-    }
-    
-    /**
-     * @dev Get total number of registered verifiers
-     * @return count Number of registered verifiers
-     */
-    function getVerifierCount() external view returns (uint256 count) {
-        return verifierList.length;
-    }
-    
-    /**
-     * @dev Get verifier details
-     * @param verifier Address of the verifier
-     * @return verifierDetails Full verifier details
-     */
-    function getVerifier(address verifier) 
-        external 
-        view 
-        returns (Verifier memory verifierDetails) 
-    {
-        return verifiers[verifier];
-    }
-    
-    // ============ Administrative Functions ============
-    
-    /**
-     * @dev Update contract ownership
-     * @param newOwner Address of the new owner
-     */
-    function transferOwnership(address newOwner) external onlyOwner {
-        require(newOwner != address(0), "EquiPathVerifier: new owner is zero address");
-        owner = newOwner;
-    }
-    
-    /**
-     * @dev Emergency pause function (can be extended with pausable pattern)
-     * @notice This function can be extended to implement emergency pause functionality
-     */
-    function emergencyPause() external onlyOwner {
-        // Implementation for emergency pause
-        // This would typically set a paused state that blocks normal operations
+    function _verifyZKProof(
+        uint[2] memory proofA,
+        uint[2][2] memory proofB,
+        uint[2] memory proofC,
+        uint[3] memory publicSignals
+    ) internal pure returns (bool) {
+        // Placeholder verification logic
+        // In production, this would call the generated verifier contract
+        return (proofA[0] != 0 && proofB[0][0] != 0 && proofC[0] != 0);
     }
 }
