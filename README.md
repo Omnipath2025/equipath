@@ -8,22 +8,20 @@ EquiPath provides **open-source infrastructure** for privacy-preserving verifica
 
 This repository contains the **public good components** funded by the Ethereum Foundation Small Grant. These components form the foundation for ethical knowledge verification systems worldwide.
 
-Or without the tree characters:
-
-```markdown
 ## 📋 Repository Structure
+equipath/
+├── circuits/                    # zk-SNARK circuit definitions (Circom)
+├── contracts/                   # Smart contracts (Solidity)
+├── client/                      # TypeScript client library
+├── docs/                        # Technical documentation
+│   ├── technical_plan.md        # Implementation approach
+│   ├── budget_breakdown.md      # Grant fund allocation
+│   ├── project_timeline.md      # Development milestones
+│   └── grant_companion.md       # Ethereum grant details
+├── examples/                    # Usage examples
+├── tests/                       # Test suites
+└── LICENSE                      # MIT License
 
-- **circuits/** - zk-SNARK circuit definitions (Circom)
-- **contracts/** - Smart contracts (Solidity)
-- **client/** - TypeScript client library
-- **docs/** - Technical documentation
-  - technical_plan.md - Implementation approach
-  - budget_breakdown.md - Grant fund allocation
-  - project_timeline.md - Development milestones
-  - grant_companion.md - Ethereum grant details
-- **examples/** - Usage examples
-- **tests/** - Test suites
-- **LICENSE** - MIT License
 ## 🔧 Core Components (Open Source)
 
 ### 1. **Zero-Knowledge Circuits**
