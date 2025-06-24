@@ -109,26 +109,27 @@ EquiPath solves the **fundamental privacy paradox** in traditional knowledge sys
 **Core Circuit: Knowledge Verification**
 
 template KnowledgeVerification(maxKnowledgeLength, maxContextLength) {
-// Public inputs (verification parameters)
-signal input contributionHash;
-signal input culturalContext;
-signal input qualityThreshold;
-signal input expectedAttributes;
-
-// Private inputs (sensitive knowledge)
-signal private input knowledgeContent[maxKnowledgeLength];
-signal private input contributorIdentity;
-signal private input contextDetails[maxContextLength];
-signal private input qualityMetrics;
-signal private input culturalCredentials;
-
-// Outputs (verification results)
-signal output verified;
-signal output attributionProof;
-signal output qualityScore;
-
-// Verification logic with privacy preservation
-// [Detailed implementation in circuits/verification/knowledge_verification.circom]
+    // Public inputs (verification parameters)
+    signal input contributionHash;
+    signal input culturalContext;
+    signal input qualityThreshold;
+    signal input expectedAttributes;
+    
+    // Private inputs (sensitive knowledge)
+    signal private input knowledgeContent[maxKnowledgeLength];
+    signal private input contributorIdentity;
+    signal private input contextDetails[maxContextLength];
+    signal private input qualityMetrics;
+    signal private input culturalCredentials;
+    
+    // Outputs (verification results)
+    signal output verified;
+    signal output attributionProof;
+    signal output qualityScore;
+    
+    // Verification logic with privacy preservation
+    // [Detailed implementation in circuits/verification/knowledge_verification.circom]
+}
 
 
 **Privacy Properties**:
@@ -144,31 +145,30 @@ signal output qualityScore;
 **Core Contract: EquiPathVerifier.sol**
 
 contract EquiPathVerifier {
-struct KnowledgeContribution {
-bytes32 contributionHash;
-bytes32 culturalContext;
-address contributor;
-VerificationStatus status;
-uint256 timestamp;
-uint256 verificationCount;
-bytes32 attributionProof;
+    struct KnowledgeContribution {
+        bytes32 contributionHash;
+        bytes32 culturalContext;
+        address contributor;
+        VerificationStatus status;
+        uint256 timestamp;
+        uint256 verificationCount;
+        bytes32 attributionProof;
+    }
+    
+    // Core verification function
+    function submitContribution(
+        bytes32 contributionHash,
+        bytes32 culturalContext,
+        bytes32 attributionProof
+    ) external returns (bool);
+    
+    // Community verification
+    function verifyContribution(
+        bytes32 contributionHash,
+        bytes32 verificationProof,
+        bool isValid
+    ) external returns (bool);
 }
-
-// Core verification function
-function submitContribution(
-    bytes32 contributionHash,
-    bytes32 culturalContext,
-    bytes32 attributionProof
-) external returns (bool);
-
-// Community verification
-function verifyContribution(
-    bytes32 contributionHash,
-    bytes32 verificationProof,
-    bool isValid
-) external returns (bool);
-
-
 
 **Contract Features**:
 - **Gas Optimized**: Efficient storage and computation patterns
@@ -183,24 +183,24 @@ function verifyContribution(
 **Core SDK: EquiPathVerifier Class**
 
 export class EquiPathVerifier {
-// Proof generation
-async generateProof(
-contribution: KnowledgeContribution,
-params: VerificationParams
-): Promise<ZKProof>;
-
-
-// Proof verification
-async verifyProof(
-    proof: ZKProof,
-    params: VerificationParams
-): Promise<VerificationResult>;
-
-// Blockchain integration
-async submitContribution(
-    contribution: KnowledgeContribution,
-    proof: ZKProof
-): Promise<ContractResult>;
+    // Proof generation
+    async generateProof(
+        contribution: KnowledgeContribution,
+        params: VerificationParams
+    ): Promise<ZKProof>;
+    
+    // Proof verification
+    async verifyProof(
+        proof: ZKProof,
+        params: VerificationParams
+    ): Promise<VerificationResult>;
+    
+    // Blockchain integration
+    async submitContribution(
+        contribution: KnowledgeContribution,
+        proof: ZKProof
+    ): Promise<ContractResult>;
+}
 
 
 **SDK Features**:
@@ -361,6 +361,15 @@ async submitContribution(
 
 npm install @equipath/verification-sdk
 
+**2. Initialize Verifier**
+
+import { createEquiPathVerifier } from '@equipath/verification-sdk';
+
+const verifier = createEquiPathVerifier(
+  '0x742d35Cc6634C0532925a3b8D5b9dd32a1234567', // Contract address
+  'https://eth-sepolia.g.alchemy.com/v2/your-api-key'  // Provider URL
+);
+
 
 **3. Generate and Submit Proof**
 
@@ -380,8 +389,8 @@ console.log('Verification submitted:', result.transactionHash);
 
 // Listen for verification events
 verifier.onContributionVerified((hash, verifier, status) => {
-console.log('Contribution verified:', hash);
-// Update application state
+  console.log('Contribution verified:', hash);
+  // Update application state
 });
 
 // Real-time verification status
@@ -393,12 +402,11 @@ const isVerified = await verifier.isContributionVerified(contributionHash);
 // Process multiple contributions efficiently
 const contributions = [contribution1, contribution2, contribution3];
 const proofs = await Promise.all(
-contributions.map(c => verifier.generateProof(c, params))
+  contributions.map(c => verifier.generateProof(c, params))
 );
 
 // Batch submission for gas optimization
 const results = await verifier.batchSubmitContributions(contributions, proofs);
-
 
 **Cross-Chain Integration**
 
@@ -416,26 +424,25 @@ await syncVerificationStatus(mainnetVerifier, polygonVerifier);
 
 // Register as community verifier
 await verifier.registerVerifier(
-verifierAddress,
-qualificationsHash
+  verifierAddress,
+  qualificationsHash
 );
 
 // Participate in verification consensus
 await verifier.verifyContribution(
-contributionHash,
-verificationProof,
-isValid
+  contributionHash,
+  verificationProof,
+  isValid
 );
 
-**Cultural Context Integration**
-/ Respect cultural protocols
+**Cultural Context Integration
+// Respect cultural protocols
 const culturalContext = await loadCulturalContext(contribution);
 const sensitivityLevel = assessCulturalSensitivity(culturalContext);
 
 // Apply appropriate privacy settings
 const privacySettings = configurePivacyLevel(sensitivityLevel);
 const proof = await verifier.generateProof(contribution, params, privacySettings);
-
 
 ---
 
