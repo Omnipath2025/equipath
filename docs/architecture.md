@@ -359,20 +359,19 @@ export class EquiPathVerifier {
 
 **1. Install SDK**
 
+```bash
 npm install @equipath/verification-sdk
 
-text
 
 **2. Initialize Verifier**
 
 import { createEquiPathVerifier } from '@equipath/verification-sdk';
 
 const verifier = createEquiPathVerifier(
-'0x742d35Cc6634C0532925a3b8D5b9dd32a1234567', // Contract address
-'https://eth-sepolia.g.alchemy.com/v2/your-api-key' // Provider URL
+  '0x742d35Cc6634C0532925a3b8D5b9dd32a1234567', // Contract address
+  'https://eth-sepolia.g.alchemy.com/v2/your-api-key'  // Provider URL
 );
 
-text
 
 **3. Generate and Submit Proof**
 
@@ -385,7 +384,6 @@ const proof = await verifier.generateProof(contribution, params);
 const result = await verifier.submitContribution(contribution, proof);
 console.log('Verification submitted:', result.transactionHash);
 
-text
 
 ### Advanced Integration Patterns
 
@@ -393,27 +391,25 @@ text
 
 // Listen for verification events
 verifier.onContributionVerified((hash, verifier, status) => {
-console.log('Contribution verified:', hash);
-// Update application state
+  console.log('Contribution verified:', hash);
+  // Update application state
 });
 
 // Real-time verification status
 const isVerified = await verifier.isContributionVerified(contributionHash);
 
-text
 
 **Batch Processing**
 
 // Process multiple contributions efficiently
 const contributions = [contribution1, contribution2, contribution3];
 const proofs = await Promise.all(
-contributions.map(c => verifier.generateProof(c, params))
+  contributions.map(c => verifier.generateProof(c, params))
 );
 
 // Batch submission for gas optimization
 const results = await verifier.batchSubmitContributions(contributions, proofs);
 
-text
 
 **Cross-Chain Integration**
 
@@ -424,7 +420,6 @@ const polygonVerifier = createEquiPathVerifier(polygonAddress, polygonUrl);
 // Sync verification across chains
 await syncVerificationStatus(mainnetVerifier, polygonVerifier);
 
-text
 
 ### Community Integration
 
@@ -432,18 +427,17 @@ text
 
 // Register as community verifier
 await verifier.registerVerifier(
-verifierAddress,
-qualificationsHash
+  verifierAddress,
+  qualificationsHash
 );
 
 // Participate in verification consensus
 await verifier.verifyContribution(
-contributionHash,
-verificationProof,
-isValid
+  contributionHash,
+  verificationProof,
+  isValid
 );
 
-text
 
 **Cultural Context Integration**
 
@@ -455,7 +449,6 @@ const sensitivityLevel = assessCulturalSensitivity(culturalContext);
 const privacySettings = configurePivacyLevel(sensitivityLevel);
 const proof = await verifier.generateProof(contribution, params, privacySettings);
 
-text
 
 ---
 
