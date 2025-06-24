@@ -47,25 +47,38 @@ protectSensitiveData(cultural: CulturalContext): Promise<PrivacyLayer>;
 
 ## 🏗️ Architecture
 
-┌─────────────────────────────────────────────────────────┐
-│ ETHEREUM ECOSYSTEM │
-├─────────────────────────────────────────────────────────┤
-│ Smart Contracts │ zk-SNARK Circuits │ Developer SDK │
-└─────────────────────────────────────────────────────────┘
-▼
-┌─────────────────────────────────────────────────────────┐
-│ EQUIPATH CORE PROTOCOL │
-├─────────────────────────────────────────────────────────┤
-│ Verification │ Attribution │ Privacy │
-│ Engine │ Layer │ Protection │
-└─────────────────────────────────────────────────────────┘
-▼
-┌─────────────────────────────────────────────────────────┐
-│ TRADITIONAL KNOWLEDGE SYSTEMS │
-├─────────────────────────────────────────────────────────┤
-│ Community │ Cultural │ Knowledge │
-│ Interfaces │ Context │ Contributors │
-└─────────────────────────────────────────────────────────┘
+**ETHEREUM ECOSYSTEM**  
+├─ Smart Contracts ├─ zk-SNARK Circuits ├─ Developer SDK  
+
+⬇️
+
+**EQUIPATH CORE PROTOCOL**  
+├─ Verification Engine ├─ Attribution Layer ├─ Privacy Protection  
+
+⬇️
+
+**TRADITIONAL KNOWLEDGE SYSTEMS**  
+├─ Community Interfaces ├─ Cultural Context ├─ Knowledge Contributors  
+
+---
+
+### Layer Details
+
+**🔗 Ethereum Ecosystem Layer**
+- **Smart Contracts**: On-chain verification and proof registry
+- **zk-SNARK Circuits**: Privacy-preserving proof generation  
+- **Developer SDK**: Integration tools for builders
+
+**⚙️ EquiPath Core Protocol Layer**
+- **Verification Engine**: Zero-knowledge proof validation
+- **Attribution Layer**: Knowledge contribution tracking
+- **Privacy Protection**: Sensitive data safeguarding
+
+**🌍 Traditional Knowledge Systems Layer**
+- **Community Interfaces**: Multi-modal contribution methods
+- **Cultural Context**: Preservation of cultural significance
+- **Knowledge Contributors**: Traditional knowledge holders
+
 
 ## 🛠️ Technology Stack
 
