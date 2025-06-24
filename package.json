@@ -8,13 +8,9 @@
     "compile": "hardhat compile",
     "test": "hardhat test",
     "circuits:compile": "node scripts/setup/compile-circuits.js",
-    "circuits:setup": "snarkjs powersoftau new bn128 12 pot12_0000.ptau",
-    "circuits:test": "npm run circuits:compile && npm test",
     "deploy:testnet": "hardhat run scripts/deploy/deploy-testnet.js --network sepolia",
     "lint": "eslint . --ext .ts,.js",
-    "format": "prettier --write .",
-    "dev": "npm run circuits:compile && npm run compile",
-    "full-test": "npm run circuits:compile && npm run compile && npm test"
+    "format": "prettier --write ."
   },
   "keywords": [
     "ethereum",
@@ -27,22 +23,18 @@
   "author": "OmniPath Team",
   "license": "MIT",
   "dependencies": {
-    "ethers": "^6.7.1",
+    "ethers": "^5.7.2",
     "snarkjs": "^0.7.0",
-    "circomlib": "^2.0.5",
-    "@openzeppelin/contracts": "^4.9.3"
+    "circomlib": "^2.0.5"
   },
   "devDependencies": {
     "@types/node": "^20.5.0",
     "typescript": "^5.1.6",
     "hardhat": "^2.17.1",
-    "@nomicfoundation/hardhat-toolbox": "^6.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
     "eslint": "^8.47.0",
-    "prettier": "^3.0.2",
-    "circom": "^2.1.6",
-    "circomlib": "^2.0.5"
-}
-
+    "prettier": "^3.0.2"
+  },
   "engines": {
     "node": ">=16.0.0"
   }
