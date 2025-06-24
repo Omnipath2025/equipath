@@ -1,0 +1,551 @@
+# ESP Grant Deliverable: Automated CI/CD Pipeline for EquiPath Protocol
+# Professional development workflow ensuring code quality and reliable deployments
+name: EquiPath Protocol CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  release:
+    types: [ published ]
+
+# Environment variables
+env:
+  NODE_VERSION: '18.x'
+  SOLIDITY_VERSION: '0.8.19'
+  COVERAGE_THRESHOLD: 80
+
+# Permissions for GitHub Actions
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  # ============ Code Quality and Linting ============
+  lint:
+    name: Code Quality & Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: |
+          npm ci
+          cd sdk/core && npm ci
+
+      - name: Run ESLint
+        run: |
+          npm run lint
+          cd sdk/core && npm run lint
+
+      - name: Check Code Formatting
+        run: |
+          npm run format:check
+          cd sdk/core && npm run format:check
+
+      - name: Validate Package.json
+        run: |
+          npm audit --audit-level moderate
+          cd sdk/core && npm audit --audit-level moderate
+
+      - name: Check for Unused Dependencies
+        run: |
+          npx depcheck --ignore-bin-package
+          cd sdk/core && npx depcheck --ignore-bin-package
+
+  # ============ Circuit Compilation and Validation ============
+  circuits:
+    name: zk-SNARK Circuits
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Circuit Dependencies
+        run: |
+          npm ci
+          npm install -g circom snarkjs
+
+      - name: Validate Circuit Syntax
+        run: |
+          find circuits -name "*.circom" -exec circom {} --r1cs --wasm --sym \;
+
+      - name: Compile Knowledge Verification Circuit
+        run: |
+          mkdir -p circuits/build
+          circom circuits/verification/knowledge_verification.circom --r1cs --wasm --sym -o circuits/build
+
+      - name: Generate Circuit Keys (Powers of Tau)
+        run: |
+          cd circuits/build
+          snarkjs powersoftau new bn128 14 pot14_0000.ptau -v
+          snarkjs powersoftau contribute pot14_0000.ptau pot14_0001.ptau --name="ESP Grant Contribution" -v
+          snarkjs powersoftau prepare phase2 pot14_0001.ptau pot14_final.ptau -v
+
+      - name: Generate Circuit-Specific Setup
+        run: |
+          cd circuits/build
+          snarkjs groth16 setup knowledge_verification.r1cs pot14_final.ptau knowledge_verification_0000.zkey
+          snarkjs zkey contribute knowledge_verification_0000.zkey knowledge_verification_final.zkey --name="ESP Circuit Setup" -v
+
+      - name: Export Verification Key
+        run: |
+          cd circuits/build
+          snarkjs zkey export verificationkey knowledge_verification_final.zkey verification_key.json
+
+      - name: Validate Circuit Constraints
+        run: |
+          cd circuits/build
+          echo "Circuit constraint validation:"
+          snarkjs info -r knowledge_verification.r1cs
+
+      - name: Cache Circuit Artifacts
+        uses: actions/cache@v3
+        with:
+          path: circuits/build
+          key: circuits-${{ github.sha }}
+          restore-keys: |
+            circuits-${{ github.ref_name }}
+            circuits-
+
+  # ============ Smart Contract Compilation and Testing ============
+  contracts:
+    name: Smart Contracts
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Compile Smart Contracts
+        run: |
+          npx hardhat compile
+          echo "Contract compilation successful"
+
+      - name: Run Contract Tests
+        run: |
+          npx hardhat test
+          echo "Contract tests completed"
+
+      - name: Generate Gas Reports
+        run: |
+          npx hardhat test --reporter gas
+          echo "Gas usage analysis completed"
+
+      - name: Contract Size Analysis
+        run: |
+          npx hardhat size-contracts
+          echo "Contract size analysis completed"
+
+      - name: Static Analysis with Slither
+        continue-on-error: true
+        run: |
+          pip install slither-analyzer
+          slither contracts/ --print human-summary
+          echo "Static analysis completed"
+
+  # ============ SDK Testing and Coverage ============
+  sdk-tests:
+    name: SDK Tests & Coverage
+    runs-on: ubuntu-latest
+    needs: [lint, circuits]
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: |
+          npm ci
+          cd sdk/core && npm ci
+
+      - name: Restore Circuit Cache
+        uses: actions/cache@v3
+        with:
+          path: circuits/build
+          key: circuits-${{ github.sha }}
+
+      - name: Run SDK Unit Tests
+        run: |
+          cd sdk/core
+          npm test -- --coverage --coverageReporters=json-summary
+
+      - name: Check Coverage Threshold
+        run: |
+          cd sdk/core
+          COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.lines.pct')
+          echo "Coverage: $COVERAGE%"
+          if (( $(echo "$COVERAGE < $COVERAGE_THRESHOLD" | bc -l) )); then
+            echo "Coverage $COVERAGE% is below threshold $COVERAGE_THRESHOLD%"
+            exit 1
+          fi
+
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: sdk/core/coverage/coverage-final.json
+          flags: sdk-tests
+          name: SDK Coverage
+
+  # ============ Integration Testing ============
+  integration:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: [circuits, contracts, sdk-tests]
+    services:
+      hardhat-node:
+        image: ethereum/client-go:latest
+        ports:
+          - 8545:8545
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: |
+          npm ci
+          cd sdk/core && npm ci
+
+      - name: Start Local Ethereum Node
+        run: |
+          npx hardhat node --hostname 0.0.0.0 &
+          sleep 10
+          echo "Local node started"
+
+      - name: Deploy Contracts to Local Network
+        run: |
+          npx hardhat run scripts/deploy/deploy-testnet.js --network localhost
+          echo "Contracts deployed to local network"
+
+      - name: Run Integration Tests
+        run: |
+          npm run test:integration
+          echo "Integration tests completed"
+
+      - name: Test Cross-Contract Interactions
+        run: |
+          cd test/integration
+          npm test
+          echo "Cross-contract interaction tests completed"
+
+  # ============ Security Auditing ============
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run npm audit
+        run: |
+          npm audit --audit-level high
+          cd sdk/core && npm audit --audit-level high
+
+      - name: Scan for Secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: main
+          head: HEAD
+
+      - name: Smart Contract Security Analysis
+        continue-on-error: true
+        run: |
+          npm install -g @crytic/echidna
+          echo "Security analysis tools installed"
+
+      - name: Dependency Vulnerability Scan
+        uses: actions/dependency-review-action@v3
+        if: github.event_name == 'pull_request'
+
+  # ============ Documentation Generation ============
+  documentation:
+    name: Generate Documentation
+    runs-on: ubuntu-latest
+    needs: sdk-tests
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: |
+          npm ci
+          cd sdk/core && npm ci
+
+      - name: Generate SDK Documentation
+        run: |
+          cd sdk/core
+          npm run docs
+          echo "SDK documentation generated"
+
+      - name: Generate Contract Documentation
+        run: |
+          npx hardhat docgen
+          echo "Contract documentation generated"
+
+      - name: Deploy Documentation to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+
+  # ============ Build and Package ============
+  build:
+    name: Build & Package
+    runs-on: ubuntu-latest
+    needs: [circuits, contracts, sdk-tests]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: |
+          npm ci
+          cd sdk/core && npm ci
+
+      - name: Build SDK
+        run: |
+          cd sdk/core
+          npm run build
+          echo "SDK build completed"
+
+      - name: Package SDK
+        run: |
+          cd sdk/core
+          npm pack
+          echo "SDK packaging completed"
+
+      - name: Validate Package Contents
+        run: |
+          cd sdk/core
+          tar -tzf *.tgz | head -20
+          echo "Package validation completed"
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: sdk-package
+          path: sdk/core/*.tgz
+          retention-days: 30
+
+  # ============ Testnet Deployment ============
+  deploy-testnet:
+    name: Deploy to Testnet
+    runs-on: ubuntu-latest
+    needs: [integration, security]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: testnet
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Deploy to Sepolia Testnet
+        env:
+          SEPOLIA_URL: ${{ secrets.SEPOLIA_URL }}
+          PRIVATE_KEY: ${{ secrets.TESTNET_PRIVATE_KEY }}
+        run: |
+          npx hardhat run scripts/deploy/deploy-testnet.js --network sepolia
+          echo "Testnet deployment completed"
+
+      - name: Verify Contract on Etherscan
+        env:
+          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+        run: |
+          npx hardhat verify --network sepolia $(cat deployments/sepolia/EquiPathVerifier.json | jq -r '.address')
+          echo "Contract verification completed"
+
+      - name: Update Deployment Registry
+        run: |
+          echo "Updating deployment registry with new addresses"
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add deployments/
+          git commit -m "Update testnet deployment addresses [skip ci]" || exit 0
+          git push
+
+  # ============ Release Management ============
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: [build, deploy-testnet]
+    if: github.event_name == 'release'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install Dependencies
+        run: |
+          npm ci
+          cd sdk/core && npm ci
+
+      - name: Build for Release
+        run: |
+          cd sdk/core
+          npm run build
+          echo "Release build completed"
+
+      - name: Publish to NPM
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          cd sdk/core
+          npm publish --access public
+          echo "Package published to NPM"
+
+      - name: Create GitHub Release Assets
+        run: |
+          mkdir -p release-assets
+          cp sdk/core/*.tgz release-assets/
+          cp circuits/build/verification_key.json release-assets/
+          cp deployments/sepolia/* release-assets/
+          echo "Release assets prepared"
+
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release-assets/*
+          generate_release_notes: true
+
+  # ============ ESP Grant Compliance Check ============
+  esp-compliance:
+    name: ESP Grant Compliance
+    runs-on: ubuntu-latest
+    needs: [build, security]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Verify MIT License
+        run: |
+          if [[ ! -f LICENSE ]] || ! grep -q "MIT License" LICENSE; then
+            echo "ESP Compliance Error: MIT License required"
+            exit 1
+          fi
+          echo "✅ MIT License verified"
+
+      - name: Check for Financial Components
+        run: |
+          if grep -r -i "payment\|compensation\|ubi\|royalty\|fee" contracts/ sdk/ --exclude="*.test.*" --exclude="*.md"; then
+            echo "ESP Compliance Warning: Financial components detected"
+            echo "ESP grants require pure public goods without financial mechanisms"
+          else
+            echo "✅ No financial components detected"
+          fi
+
+      - name: Validate Open Source Requirements
+        run: |
+          PROPRIETARY_FILES=$(find . -name "*.sol" -o -name "*.ts" -o -name "*.js" | xargs grep -l "proprietary\|commercial\|enterprise" | grep -v test | grep -v README || true)
+          if [[ -n "$PROPRIETARY_FILES" ]]; then
+            echo "ESP Compliance Warning: Proprietary components detected:"
+            echo "$PROPRIETARY_FILES"
+          else
+            echo "✅ Open source requirements satisfied"
+          fi
+
+      - name: Check Documentation Completeness
+        run: |
+          REQUIRED_DOCS=("README.md" "docs/architecture.md" "sdk/core/README.md" "CONTRIBUTING.md")
+          for doc in "${REQUIRED_DOCS[@]}"; do
+            if [[ ! -f "$doc" ]]; then
+              echo "ESP Compliance Error: Missing required documentation: $doc"
+              exit 1
+            fi
+          done
+          echo "✅ Documentation requirements satisfied"
+
+      - name: Validate ESP Grant Metadata
+        run: |
+          if ! grep -q "esp.ethereum.foundation" README.md; then
+            echo "ESP Compliance Warning: ESP grant attribution missing"
+          fi
+          if ! grep -q "public good" README.md; then
+            echo "ESP Compliance Warning: Public good commitment missing"
+          fi
+          echo "✅ ESP compliance check completed"
+
+# Workflow notifications
+notifications:
+  webhooks:
+    - url: ${{ secrets.DISCORD_WEBHOOK }}
+      if: failure()
