@@ -36,12 +36,13 @@
     "@types/node": "^20.5.0",
     "typescript": "^5.1.6",
     "hardhat": "^2.17.1",
-    "@nomicfoundation/hardhat-toolbox": "^3.0.2",
+    "@nomicfoundation/hardhat-toolbox": "^6.0.0",
     "eslint": "^8.47.0",
     "prettier": "^3.0.2",
     "circom": "^2.1.6",
     "circomlib": "^2.0.5"
-  },
+}
+
   "engines": {
     "node": ">=16.0.0"
   }
