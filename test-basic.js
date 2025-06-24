@@ -1,4 +1,20 @@
-const { ethers } = require('ethers');
+// Fix for ethers.js v6 compatibility
+let ethers;
+try {
+    // Try ethers v6 import style
+    ethers = require('ethers');
+    if (!ethers.JsonRpcProvider) {
+        // Fallback for ethers v5
+        ethers.JsonRpcProvider = ethers.providers.JsonRpcProvider;
+        ethers.keccak256 = ethers.utils.keccak256;
+        ethers.toUtf8Bytes = ethers.utils.toUtf8Bytes;
+        ethers.formatBytes32String = ethers.utils.formatBytes32String;
+        ethers.id = ethers.utils.id;
+    }
+} catch (error) {
+    console.error('❌ Ethers.js not found. Please install with: npm install ethers');
+    process.exit(1);
+}
 
 /**
  * Basic integration test for EquiPath protocol
@@ -12,8 +28,8 @@ async function runBasicTest() {
         // Test 1: Verify ethers.js is working
         console.log('✅ Test 1: Ethers.js library loaded successfully');
         
-        // Test 2: Create a mock provider
-        const provider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
+        // Test 2: Create a mock provider (use fallback URL)
+        const provider = new ethers.JsonRpcProvider('https://eth-mainnet.alchemyapi.io/v2/demo');
         console.log('✅ Test 2: Provider created successfully');
         
         // Test 3: Generate a test wallet
@@ -23,13 +39,13 @@ async function runBasicTest() {
         
         // Test 4: Test hash generation (simulating knowledge content hashing)
         const testContent = 'Traditional medicinal knowledge about healing herbs';
-        const contentHash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(testContent));
+        const contentHash = ethers.keccak256(ethers.toUtf8Bytes(testContent));
         console.log('✅ Test 4: Knowledge content hashing');
         console.log(`   Content Hash: ${contentHash}`);
         
         // Test 5: Test cultural context encoding
         const culturalContext = 'Indigenous-Healing-Traditions';
-        const contextBytes = ethers.utils.formatBytes32String(culturalContext);
+        const contextBytes = ethers.formatBytes32String(culturalContext);
         console.log('✅ Test 5: Cultural context encoding');
         console.log(`   Context: ${culturalContext}`);
         console.log(`   Encoded: ${contextBytes}`);
@@ -46,7 +62,7 @@ async function runBasicTest() {
         console.log('✅ Test 6: Mock zk-SNARK proof structure created');
         
         // Test 7: Test event signature generation
-        const eventSignature = ethers.utils.id('ContributionVerified(uint256,bytes32,address,bytes32,uint256)');
+        const eventSignature = ethers.id('ContributionVerified(uint256,bytes32,address,bytes32,uint256)');
         console.log('✅ Test 7: Smart contract event signature');
         console.log(`   Signature: ${eventSignature}`);
         
