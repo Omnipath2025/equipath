@@ -1,0 +1,217 @@
+# EquiPath: Open-Source Knowledge Attribution Infrastructure
+
+**Zero-Knowledge Verification Protocol for Traditional Knowledge Protection on Ethereum**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Ethereum](https://img.shields.io/badge/Ethereum-3C3C3D?logo=ethereum&logoColor=white)](https://ethereum.org)
+[![Build Status](https://img.shields.io/badge/build-pending-orange)](https://github.com/your-username/equipath)
+
+## 🎯 Mission
+
+EquiPath creates **privacy-preserving verification infrastructure** that enables traditional knowledge attribution without revealing sensitive cultural information. Built as an **Ethereum public good**, this protocol prevents biopiracy while promoting equitable participation in therapeutic development.
+
+## 🚀 Ethereum Foundation ESP Grant Application
+
+**Grant Type:** Small Grants ($30,000)  
+**Category:** Infrastructure & Developer Tools  
+**Timeline:** 12 weeks  
+**Status:** Application Submitted
+
+### ESP Alignment
+
+- ✅ **Infrastructure**: Core zk-SNARK circuits for knowledge verification
+- ✅ **Developer Tools**: JavaScript SDK for dApp integration  
+- ✅ **Research**: Novel privacy-preserving attribution protocols
+- ✅ **Public Good**: MIT-licensed, patent-free verification layer
+
+## 📋 Technical Overview
+
+EquiPath implements **zero-knowledge proofs** to solve the fundamental privacy paradox in traditional knowledge systems: contributors must prove ownership without revealing valuable knowledge.
+
+### Core Innovation
+
+interface EquiPathVerification {
+generateProof(contribution: Contribution): Promise<ZKProof>;
+verifyAttribution(proof: ZKProof): Promise<VerificationResult>;
+protectSensitiveData(cultural: CulturalContext): Promise<PrivacyLayer>;
+}
+
+
+### Key Features
+
+- **🔐 Privacy-First**: zk-SNARK verification without content disclosure
+- **⚡ Ethereum-Native**: Smart contracts optimized for Layer 2 deployment
+- **🌍 Universal Access**: Multi-language, offline-capable interfaces
+- **🔍 Transparent**: Explainable verification with audit trails
+- **⚖️ Equitable**: Fair attribution without revealing sensitive cultural data
+
+## 🏗️ Architecture
+
+┌─────────────────────────────────────────────────────────┐
+│ ETHEREUM ECOSYSTEM │
+├─────────────────────────────────────────────────────────┤
+│ Smart Contracts │ zk-SNARK Circuits │ Developer SDK │
+└─────────────────────────────────────────────────────────┘
+▼
+┌─────────────────────────────────────────────────────────┐
+│ EQUIPATH CORE PROTOCOL │
+├─────────────────────────────────────────────────────────┤
+│ Verification │ Attribution │ Privacy │
+│ Engine │ Layer │ Protection │
+└─────────────────────────────────────────────────────────┘
+▼
+┌─────────────────────────────────────────────────────────┐
+│ TRADITIONAL KNOWLEDGE SYSTEMS │
+├─────────────────────────────────────────────────────────┤
+│ Community │ Cultural │ Knowledge │
+│ Interfaces │ Context │ Contributors │
+└─────────────────────────────────────────────────────────┘
+
+## 🛠️ Technology Stack
+
+### Core Components
+- **zk-SNARKs**: `circom` + `snarkjs` for privacy-preserving proofs
+- **Smart Contracts**: Solidity on Ethereum with Polygon deployment
+- **Backend**: TypeScript with Express.js for API layer
+- **Frontend**: React.js for developer dashboard
+- **Database**: PostgreSQL for operational data
+
+### Ethereum Integration
+- **Layer 1**: Ethereum mainnet for final verification
+- **Layer 2**: Polygon for cost-efficient operations
+- **Standards**: EIP-712 for structured data signing
+- **Wallets**: MetaMask, WalletConnect integration
+
+## 📦 Repository Structure
+
+equipath/
+├── circuits/ # zk-SNARK circuits (Circom)
+│ ├── verification.circom
+│ ├── attribution.circom
+│ └── privacy.circom
+├── contracts/ # Ethereum smart contracts
+│ ├── EquiPathVerifier.sol
+│ ├── AttributionRegistry.sol
+│ └── PrivacyLayer.sol
+├── sdk/ # Developer SDK
+│ ├── typescript/
+│ ├── javascript/
+│ └── documentation/
+├── examples/ # Integration examples
+│ ├── basic-verification/
+│ ├── dapp-integration/
+│ └── community-interface/
+├── tests/ # Comprehensive test suite
+│ ├── circuits/
+│ ├── contracts/
+│ └── integration/
+└── docs/ # Technical documentation
+├── architecture.md
+├── api-reference.md
+└── deployment-guide.md
+
+
+## 🎯 ESP Grant Deliverables
+
+### Phase 1: Core Infrastructure (Weeks 1-4)
+- ✅ zk-SNARK circuits for knowledge verification
+- ✅ Basic smart contract deployment
+- ✅ Proof generation library (TypeScript)
+
+### Phase 2: Ethereum Integration (Weeks 5-8)  
+- ✅ Production smart contracts with gas optimization
+- ✅ Layer 2 deployment on Polygon
+- ✅ MetaMask integration for user interfaces
+
+### Phase 3: Developer Ecosystem (Weeks 9-12)
+- ✅ Complete JavaScript/TypeScript SDK
+- ✅ Documentation and tutorials
+- ✅ Example dApp implementations
+
+## 🌟 Impact & Use Cases
+
+### Immediate Applications
+- **Pharmaceutical R&D**: Ethical sourcing verification
+- **Academic Research**: Attribution for traditional medicine studies  
+- **DeFi Protocols**: Privacy-preserving identity verification
+- **NFT Platforms**: Cultural artifact authenticity
+
+### Ecosystem Benefits
+- **Builders**: New tools for privacy-preserving dApps
+- **Researchers**: Open protocols for cultural IP protection
+- **Communities**: Technical infrastructure preventing exploitation
+- **Ethereum**: Novel application expanding ecosystem utility
+
+## 🚦 Getting Started
+
+### Prerequisites
+
+node >= 16.0.0
+npm >= 8.0.0
+foundry >= 0.2.0
+circom >= 2.0.0
+
+
+### Quick Start
+
+Clone repository
+git clone https://github.com/your-username/equipath.git
+cd equipath
+
+Install dependencies
+npm install
+
+Compile circuits
+npm run circuits:compile
+
+Deploy contracts (testnet)
+npm run contracts:deploy:testnet
+
+Run tests
+npm test
+
+Start development server
+npm run dev
+
+
+## 📚 Documentation
+
+- **[Architecture Overview](docs/architecture.md)**: System design and components
+- **[API Reference](docs/api-reference.md)**: Complete SDK documentation
+- **[Integration Guide](docs/integration-guide.md)**: How to build with EquiPath
+- **[Research Papers](docs/research/)**: Academic publications and analysis
+
+## 🤝 Contributing
+
+EquiPath is an **open-source public good**. We welcome contributions from:
+
+- **Developers**: Protocol improvements and optimizations
+- **Researchers**: Academic validation and peer review
+- **Communities**: Cultural sensitivity guidance and feedback
+- **Builders**: Example implementations and use cases
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+**Important**: This project is developed as an Ethereum public good. All deliverables are open-source and patent-free in compliance with Ethereum Foundation ESP requirements.
+
+## 🏛️ Governance
+
+EquiPath follows **community-governed development**:
+
+- **Technical Decisions**: GitHub Issues and Pull Requests
+- **Protocol Changes**: Community RFC process  
+- **Roadmap Planning**: Quarterly community calls
+- **Ethical Guidelines**: Cultural liaison advisory board
+
+## 📞 Contact & Support
+
+- **Email**: contessapetrini@cloakandquill.org
+
+
+---
+
+**Built with ❤️ for the Ethereum ecosystem and traditional knowledge communities worldwide.**
