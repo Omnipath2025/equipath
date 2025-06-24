@@ -95,37 +95,38 @@ protectSensitiveData(cultural: CulturalContext): Promise<PrivacyLayer>;
 - **Standards**: EIP-712 for structured data signing
 - **Wallets**: MetaMask, WalletConnect integration
 
-## 📦 Repository Structure
+## Repository Structure
 
-equipath-protocol/
-├── README.md # Main documentation
-├── LICENSE # MIT License
-├── .gitignore # Git ignore patterns
-├── package.json # Project dependencies
-├── hardhat.config.js # Ethereum development config
-├── .env.example # Environment variables template
-├── circuits/ # zk-SNARK Circuits (Core ESP Deliverable)
-│ ├── verification/
-│ │ ├── knowledge_verification.circom
-│ │ ├── attribution_proof.circom
-│ │ └── privacy_layer.circom
-│ └── tests/
-├── contracts/ # Smart Contracts (ESP Infrastructure)
-│ ├── core/
-│ │ ├── EquiPathVerifier.sol
-│ │ ├── ProofRegistry.sol
-│ │ └── PrivacyLayer.sol
-│ └── test/
-├── sdk/ # Developer SDK (ESP Builder Tools)
-│ ├── core/src/
-│ │ ├── verifier.ts
-│ │ ├── proof-generator.ts
-│ │ └── types.ts
-│ └── examples/
-└── docs/ # Technical Documentation
-├── architecture.md
-├── api-reference.md
-└── deployment-guide.md
+📦 **equipath-protocol/**
+├── 📄 README.md                    # Main documentation
+├── 📄 LICENSE                      # MIT License  
+├── 📄 .gitignore                   # Git ignore patterns
+├── 📄 package.json                 # Project dependencies
+├── 📄 hardhat.config.js           # Ethereum development config
+├── 📄 .env.example                # Environment variables template
+├── 📁 **circuits/**               # zk-SNARK Circuits (Core ESP Deliverable)
+│   ├── 📁 verification/
+│   │   ├── 📄 knowledge_verification.circom
+│   │   ├── 📄 attribution_proof.circom
+│   │   └── 📄 privacy_layer.circom
+│   └── 📁 tests/
+├── 📁 **contracts/**              # Smart Contracts (ESP Infrastructure)
+│   ├── 📁 core/
+│   │   ├── 📄 EquiPathVerifier.sol
+│   │   ├── 📄 ProofRegistry.sol
+│   │   └── 📄 PrivacyLayer.sol
+│   └── 📁 test/
+├── 📁 **sdk/**                    # Developer SDK (ESP Builder Tools)
+│   ├── 📁 core/src/
+│   │   ├── 📄 verifier.ts
+│   │   ├── 📄 proof-generator.ts
+│   │   └── 📄 types.ts
+│   └── 📁 examples/
+└── 📁 **docs/**                   # Technical Documentation
+    ├── 📄 architecture.md
+    ├── 📄 api-reference.md
+    └── 📄 deployment-guide.md
+
 
 ## 🎯 ESP Grant Deliverables
 
