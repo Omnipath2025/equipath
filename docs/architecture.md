@@ -360,11 +360,14 @@ export class EquiPathVerifier {
 
 ```bash
 npm install @equipath/verification-sdk
+2. Initialize Verifier
+javascript
 
-###** 2. Initialize Verifier**
 
 import { createEquiPathVerifier } from '@equipath/verification-sdk';
 const verifier = createEquiPathVerifier( '0x742d35Cc6634C0532925a3b8D5b9dd32a1234567', // Contract address 'https://eth-sepolia.g.alchemy.com/v2/your-api-key' // Provider URL );
+javascript
+
 
 
 ### 3. Generate and Submit Proof
@@ -375,6 +378,8 @@ const contribution = generateSampleContribution();
 const params = createSampleParams(contributionHash);
 const proof = await verifier.generateProof(contribution, params);
 // Submit to blockchain const result = await verifier.submitContribution(contribution, proof); console.log('Verification submitted:', result.transactionHash);
+javascript
+
 
 
 ## Advanced Integration Patterns
@@ -388,6 +393,8 @@ verifier.onContributionVerified((hash, verifier, status) => {
   // Update application state
 });
 // Real-time verification status const isVerified = await verifier.isContributionVerified(contributionHash);
+javascript
+
 
 
 ### Batch Processing
@@ -399,6 +406,8 @@ const proofs = await Promise.all(
   contributions.map(c => verifier.generateProof(c, params))
 );
 // Batch submission for gas optimization const results = await verifier.batchSubmitContributions(contributions, proofs);
+javascript
+
 
 
 ### Cross-Chain Integration
@@ -408,6 +417,9 @@ const proofs = await Promise.all(
 const mainnetVerifier = createEquiPathVerifier(mainnetAddress, mainnetUrl);
 const polygonVerifier = createEquiPathVerifier(polygonAddress, polygonUrl);
 // Sync verification across chains await syncVerificationStatus(mainnetVerifier, polygonVerifier);
+javascript
+
+
 
 ## Community Integration
 
@@ -420,6 +432,9 @@ await verifier.registerVerifier(
   qualificationsHash
 );
 // Participate in verification consensus await verifier.verifyContribution( contributionHash, verificationProof, isValid );
+javascript
+
+
 
 ### Cultural Context Integration
 
@@ -428,6 +443,9 @@ await verifier.registerVerifier(
 const culturalContext = await loadCulturalContext(contribution);
 const sensitivityLevel = assessCulturalSensitivity(culturalContext);
 // Apply appropriate privacy settings const privacySettings = configurePivacyLevel(sensitivityLevel); const proof = await verifier.generateProof(contribution, params, privacySettings);
+javascript
+
+
 
 ---
 
