@@ -237,52 +237,38 @@ Improve proof generation time by 20%
 Add performance benchmarking tests
 
 Update documentation with optimization details"
-
 ### Pull Request Template
 
-Description
+## Description
 Brief description of changes and motivation
 
-Type of Change
- Bug fix (non-breaking change fixing an issue)
+## Type of Change
+- [ ] Bug fix (non-breaking change fixing an issue)
+- [ ] New feature (non-breaking change adding functionality)
+- [ ] Breaking change (fix or feature causing existing functionality to change)
+- [ ] Documentation update
+- [ ] Performance improvement
+- [ ] Security enhancement
 
- New feature (non-breaking change adding functionality)
+## Testing
+- [ ] Unit tests pass
+- [ ] Integration tests pass
+- [ ] Manual testing completed
+- [ ] Performance benchmarks run
 
- Breaking change (fix or feature causing existing functionality to change)
+## ESP Grant Compliance
+- [ ] Maintains open-source public good focus
+- [ ] No financial/compensation mechanisms added
+- [ ] Enhances Ethereum ecosystem infrastructure
+- [ ] Improves developer tools and accessibility
 
- Documentation update
+## Checklist
+- [ ] Code follows project style guidelines
+- [ ] Self-review completed
+- [ ] Documentation updated
+- [ ] No breaking changes without discussion
 
- Performance improvement
 
- Security enhancement
-
-Testing
- Unit tests pass
-
- Integration tests pass
-
- Manual testing completed
-
- Performance benchmarks run
-
-ESP Grant Compliance
- Maintains open-source public good focus
-
- No financial/compensation mechanisms added
-
- Enhances Ethereum ecosystem infrastructure
-
- Improves developer tools and accessibility
-
-Checklist
- Code follows project style guidelines
-
- Self-review completed
-
- Documentation updated
-
- No breaking changes without discussion
- 
 ### Review Process
 
 1. **Automated Checks**
