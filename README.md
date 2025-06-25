@@ -276,7 +276,6 @@ The EquiPath protocol serves as the zero-knowledge verification layer for the br
 
 ## 🌟 Impact & Use Cases
 
-## Impact & Use Cases
 
 EquiPath provides essential infrastructure for ethical sourcing, academic attribution, and privacy-preserving dApps in critical areas like pharmaceutical R&D, cultural IP protection, and equitable resource distribution.
 
