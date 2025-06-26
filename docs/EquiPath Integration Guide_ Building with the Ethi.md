@@ -1,4 +1,3 @@
-<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" class="logo" width="120"/>
 
 ## EquiPath Integration Guide: Building with the Ethical Knowledge Exchange Platform
 
@@ -6,20 +5,20 @@ This guide provides technical documentation and examples for developers looking 
 
 ### 1. Introduction to EquiPath
 
-EquiPath is built on a distributed AI architecture, integrating several interconnected components to address challenges in traditional knowledge exchange. Its core purpose is to ensure equitable compensation, maintain cultural context, and facilitate bidirectional knowledge flow [^1].
+EquiPath is built on a distributed AI architecture, integrating several interconnected components to address challenges in traditional knowledge exchange. Its core purpose is to ensure equitable compensation, maintain cultural context, and facilitate bidirectional knowledge flow .
 
 **Key Features:**
 
-* **Bidirectional AI Knowledge Matching Engine:** Semantic matching between traditional knowledge and research queries, preserving cultural context and access controls [^1].
-* **Ethical Compensation Automation System:** AI-driven compensation calculation and transparent distribution via blockchain [^1].
-* **Cultural Context Preservation Module:** Machine learning for encoding and conveying cultural context, spiritual significance, and usage boundaries [^1].
-* **Multi-Modal Knowledge Integration:** Processes diverse formats including oral narratives, visuals, and experiential practices [^1].
-* **Community-Validated AI Training:** Incorporates community feedback and traditional validation methods into ML training [^1].
+* **Bidirectional AI Knowledge Matching Engine:** Semantic matching between traditional knowledge and research queries, preserving cultural context and access controls .
+* **Ethical Compensation Automation System:** AI-driven compensation calculation and transparent distribution via blockchain .
+* **Cultural Context Preservation Module:** Machine learning for encoding and conveying cultural context, spiritual significance, and usage boundaries .
+* **Multi-Modal Knowledge Integration:** Processes diverse formats including oral narratives, visuals, and experiential practices .
+* **Community-Validated AI Training:** Incorporates community feedback and traditional validation methods into ML training .
 
 
 ### 2. Core EquiPath Architectural Components
 
-EquiPath's architecture comprises several layers that work together to achieve its mission [^1]:
+EquiPath's architecture comprises several layers that work together to achieve its mission :
 
 * **AI Knowledge Processing Layer:** Neural networks optimized for traditional knowledge formats.
 * **Bidirectional Matching Engine:** Semantic matching algorithms with cultural context awareness.
@@ -165,8 +164,8 @@ EquiPath provides mechanisms to ensure that traditional knowledge is used within
 
 **Key Considerations:**
 
-* **Access Levels:** Knowledge items in EquiPath may have different access levels (e.g., "public", "controlled", "restricted," "sacred"). Your application must check these levels before presenting or utilizing knowledge [^1].
-* **Usage Guidelines:** Each knowledge item is associated with specific usage guidelines provided by the traditional knowledge holders. These include appropriate contexts, preparation methods, and even spiritual considerations [^1].
+* **Access Levels:** Knowledge items in EquiPath may have different access levels (e.g., "public", "controlled", "restricted," "sacred"). Your application must check these levels before presenting or utilizing knowledge .
+* **Usage Guidelines:** Each knowledge item is associated with specific usage guidelines provided by the traditional knowledge holders. These include appropriate contexts, preparation methods, and even spiritual considerations .
 * **Attribution:** All uses of knowledge obtained via EquiPath must include proper attribution as specified by the platform.
 
 **Example (Conceptual Knowledge Item Representation from EquiPath):**
@@ -200,14 +199,14 @@ Your application's UI/UX should present these cultural contexts clearly to users
 
 #### 3.4 Integration with EthnoPath (Source of Traditional Knowledge)
 
-EthnoPath serves as a foundational component within the broader OmniPath ecosystem, responsible for capturing, structuring, and preserving traditional knowledge. EquiPath directly leverages the structured data from EthnoPath for its matching and compensation mechanisms [^2].
+EthnoPath serves as a foundational component within the broader OmniPath ecosystem, responsible for capturing, structuring, and preserving traditional knowledge. EquiPath directly leverages the structured data from EthnoPath for its matching and compensation mechanisms .
 
 **Key Aspects of EthnoPath Integration:**
 
-* **Contextual Knowledge Extraction:** EthnoPath uses advanced NLP to extract and structure medicinal knowledge, preserving cultural, ceremonial, and environmental context [^2].
-* **Multi-Modal Documentation:** Captures text, images, audio, video, and spatial information for comprehensive representation [^2].
-* **Semantic Knowledge Graph:** Organizes traditional knowledge into a machine-readable format, maintaining relationships between plants, preparations, uses, and cultural contexts [^2].
-* **Contributor Recognition Framework:** EthnoPath tracks knowledge provenance, which EquiPath uses for attribution and compensation [^2].
+* **Contextual Knowledge Extraction:** EthnoPath uses advanced NLP to extract and structure medicinal knowledge, preserving cultural, ceremonial, and environmental context .
+* **Multi-Modal Documentation:** Captures text, images, audio, video, and spatial information for comprehensive representation .
+* **Semantic Knowledge Graph:** Organizes traditional knowledge into a machine-readable format, maintaining relationships between plants, preparations, uses, and cultural contexts .
+* **Contributor Recognition Framework:** EthnoPath tracks knowledge provenance, which EquiPath uses for attribution and compensation .
 
 When you integrate with EquiPath, you implicitly benefit from the rich, contextually-preserved data originating from EthnoPath.
 
@@ -222,45 +221,6 @@ When you integrate with EquiPath, you implicitly benefit from the rich, contextu
 
 By following this integration guide and adhering to these best practices, developers can create powerful applications that contribute to a more equitable and respectful knowledge exchange ecosystem.
 
-<div style="text-align: center">⁂</div>
 
-[^1]: EquiPath_-An-AI-Powered-Ethical-Knowledge-Exchange.pdf
 
-[^2]: EthnoPath-Patentability-Document.docx
-
-[^3]: i-need-a-complete-review-and-o-Y2CbIZMrT5WtN84pA0lXPw.md
-
-[^4]: MarketPath-Patentability-Document.docx
-
-[^5]: OmniPath-Ecosystem-Patentability-Document.pdf
-
-[^6]: OmniPath-Ecosystem-Patentability-Document.pdf
-
-[^7]: ethnopath-technical-specification.md
-
-[^8]: api-specifications.md
-
-[^9]: data-model-specifications.md
-
-[^10]: ExcellencePath-Framework_-Comprehensive-Patentabil.pdf
-
-[^11]: https://equifly.com/equipath/
-
-[^12]: https://eyeforce.my.site.com/eyefinitysupport/s/article/ExamWRITER-Equipment-Integration-User-s-Guide
-
-[^13]: https://equipathhealth.com/faqs/
-
-[^14]: https://help.equip.co/en/article/api-integrations-v51m7f/
-
-[^15]: https://equipsoftware.co/equip-integrations-and-apis/
-
-[^16]: https://help.lever.co/hc/en-us/articles/20087400069917-Enabling-and-using-the-Equip-integration
-
-[^17]: https://www.youtube.com/watch?v=GFf9uhpYyE4
-
-[^18]: http://docs.equip.ninja/en/latest/gettingstarted/
-
-[^19]: https://exalate.com/blog/github-integrations/
-
-[^20]: https://equipathofficial.com
 
