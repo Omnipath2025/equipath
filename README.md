@@ -165,7 +165,7 @@ protectSensitiveData(cultural: CulturalContext): Promise<PrivacyLayer>;
   - verify-deployment.js
   - gas-optimization.js
 
-**docs/** *📚 Technical Documentation*
+**docs/** *📚 Strategic Analysis & Technical Documentation*
 - architecture/
   - overview.md
   - zk-circuits.md
@@ -174,9 +174,12 @@ protectSensitiveData(cultural: CulturalContext): Promise<PrivacyLayer>;
   - quick-start.md
   - integration-guide.md
   - advanced-usage.md
-- research/
-  - whitepaper.md
-  - technical-specifications.md
+- Research/
+├── 1_Market_Gap_Analysis.md
+├── 2_Methodological_Framework.md
+├── 3_Technical_Validation/
+│   ├── EquiPath_Analysis.md
+└── 4_Ethical_Framework_and_Impact.md    
 - community/
   - contributing.md
   - code-of-conduct.md
