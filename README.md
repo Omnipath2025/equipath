@@ -174,12 +174,14 @@ protectSensitiveData(cultural: CulturalContext): Promise<PrivacyLayer>;
   - quick-start.md
   - integration-guide.md
   - advanced-usage.md
-- Research/
+## Research
+research/
 ├── 1_Market_Gap_Analysis.md
 ├── 2_Methodological_Framework.md
 ├── 3_Technical_Validation/
-│   ├── EquiPath_Analysis.md
-└── 4_Ethical_Framework_and_Impact.md    
+│ ├── EquiPath_Analysis.md
+│ └── ...
+├── 4_Ethical_Framework_and_Impact.md  
 - community/
   - contributing.md
   - code-of-conduct.md
