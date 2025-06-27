@@ -174,17 +174,17 @@ protectSensitiveData(cultural: CulturalContext): Promise<PrivacyLayer>;
   - quick-start.md
   - integration-guide.md
   - advanced-usage.md
-## Research
-
-- [1_Market_Gap_Analysis.md](research/1_Market_Gap_Analysis.md)
-- [2_Methodological_Framework.md](research/2_Methodological_Framework.md)
-- [3_Technical_Validation/EquiPath_Analysis.md](research/3_Technical_Validation/EquiPath_Analysis.md)
-- [4_Ethical_Framework_and_Impact.md](research/4_Ethical_Framework_and_Impact.md)
-
-- community/
+  - community/
   - contributing.md
   - code-of-conduct.md
   - governance.md
+
+- **[Market Gap Analysis](docs/research/1_Market_Gap_Analysis.md)**: Comprehensive analysis of the traditional knowledge protection market, identifying key opportunities and competitive landscape
+- **[Methodological Framework](docs/research/2_Methodological_Framework.md)**: Technical and ethical methodology for privacy-preserving knowledge verification
+- **[Technical Validation](docs/research/3_Technical_Validation/EquiPath_Analysis.md)**: In-depth analysis of EquiPath's technical architecture and validation approach
+- **[Ethical Framework and Impact](docs/research/4_Ethical_Framework_and_Impact.md)**: Comprehensive ethical guidelines and impact assessment for traditional knowledge protection
+
+This research documentation provides the academic foundation supporting EquiPath's development as an Ethereum public good.
 
 **test/** *🧪 Comprehensive Testing*
 - integration/
