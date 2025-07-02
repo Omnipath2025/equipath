@@ -48,22 +48,23 @@ protectSensitiveData(cultural: CulturalContext): Promise<PrivacyLayer>;
 ## 🏗️ Architecture
 
 **ETHEREUM ECOSYSTEM**  
-├─ Smart Contracts
-├─ zk-SNARK Circuits
-└─ Developer SDK
-       ⬇️
+- ├─ Smart Contracts
+- ├─ zk-SNARK Circuits
+- └─ Developer SDK
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️
 
 **EQUIPATH CORE PROTOCOL**  
-├─ Verification Engine
-├─ Attribution Layer
-└─ Privacy Protection 
+- ├─ Verification Engine
+- ├─ Attribution Layer
+- └─ Privacy Protection
 
-⬇️
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️
 
 **TRADITIONAL KNOWLEDGE SYSTEMS**  
-├─ Community Interfaces
-├─ Cultural Context
-└─ Knowledge Contributors  
+- ├─ Community Interfaces
+- ├─ Cultural Context
+- └─ Knowledge Contributors  
 
 ---
 
