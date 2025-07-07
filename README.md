@@ -23,6 +23,13 @@ EquiPath creates **privacy-preserving verification infrastructure** that enables
 - ✅ **Developer Tools**: JavaScript SDK for dApp integration  
 - ✅ **Research**: Novel privacy-preserving attribution protocols
 - ✅ **Public Good**: MIT-licensed, patent-free verification layer
+- ## Ethereum Foundation ESP Compliance
+
+This project is developed as an open-source public good with full ESP compliance:
+- ✅ **Patent-Free**: No patents filed or planned for ESP-funded components
+- ✅ **MIT Licensed**: All deliverables remain freely usable by the community
+- ✅ **Open Source**: Complete transparency and community ownership
+
 
 ## 📋 Technical Overview
 
