@@ -16,11 +16,14 @@ EquiPath is developed as a **patent-free public good** with full Ethereum Founda
 - **Patent-Free Contributions**: All contributions must maintain patent-free status
 - **MIT License**: All code remains freely usable under MIT license terms
 
-### ESP Grant Compliance
-- ✅ **Open Source**: All deliverables under MIT license
-- ✅ **Patent-Free**: No encumbering patents on ESP-funded work
-- ✅ **Public Good**: Infrastructure serving the entire Ethereum ecosystem
-- ✅ **Community Ownership**: No proprietary restrictions on usage
+## ESP Grant Compliance
+- [ ] Maintains patent-free public good focus
+- [ ] No patent claims introduced by contribution
+- [ ] No financial/compensation mechanisms added
+- [ ] Enhances Ethereum ecosystem infrastructure
+- [ ] Improves developer tools and accessibility
+- [ ] Respects MIT license patent-free requirements
+
 
 ### Contributor IP Requirements
 By contributing to EquiPath, you agree that:
@@ -28,6 +31,24 @@ By contributing to EquiPath, you agree that:
 - You grant patent-free rights to your contributions
 - You will not assert patent claims against project users
 - Your contributions align with MIT license terms
+
+### Patent Non-Assertion Agreement
+Contributors making substantial contributions (>100 lines of code) agree to:
+- Not assert patent claims against EquiPath users
+- Grant patent-free rights to contributed innovations
+- Maintain ESP grant compliance in all contributions
+- Support the patent-free public good mission
+
+### EquiPath Patent Non-Assertion Pledge
+
+Cloak and Quill Research hereby pledges that it will not initiate patent litigation against any user, distributor, or developer of EquiPath ESP-funded components, provided such use is in good faith and aligns with the project's public good mission.
+
+This pledge is:
+- **Irrevocable**: Cannot be withdrawn for ESP-funded components
+- **Binding**: Legally enforceable commitment
+- **Transferable**: Binds any future owners of relevant patents
+- **ESP-Specific**: Applies to all Ethereum Foundation ESP grant deliverables
+
 
 
 ## 🚀 Getting Started
