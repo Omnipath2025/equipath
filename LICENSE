@@ -19,3 +19,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+### MIT License Patent Grant Clarification
+
+While the MIT License grants broad permissions "without restriction," we explicitly clarify that this includes patent rights. Our MIT license grant encompasses:
+- Copyright permissions for code use and modification
+- Patent permissions for any patents covering contributed code
+- Distribution rights without patent assertion concerns
+- Sublicensing rights maintaining patent-free status
