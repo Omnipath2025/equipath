@@ -6,6 +6,30 @@ Thank you for your interest in contributing to EquiPath! We're building **privac
 
 EquiPath enables **attribution without exploitation** by providing zero-knowledge verification systems that prove knowledge ownership without revealing sensitive cultural information. As an **ESP-funded public good**, all contributions help strengthen the Ethereum ecosystem while advancing social justice.
 
+## 🔒 Intellectual Property & ESP Compliance
+
+EquiPath is developed as a **patent-free public good** with full Ethereum Foundation ESP compliance:
+
+### Patent-Free Commitment
+- **No Patents Filed**: No patents have been filed for any ESP-funded components
+- **Non-Assertion Pledge**: We commit to never assert patent claims against users of ESP-funded deliverables
+- **Patent-Free Contributions**: All contributions must maintain patent-free status
+- **MIT License**: All code remains freely usable under MIT license terms
+
+### ESP Grant Compliance
+- ✅ **Open Source**: All deliverables under MIT license
+- ✅ **Patent-Free**: No encumbering patents on ESP-funded work
+- ✅ **Public Good**: Infrastructure serving the entire Ethereum ecosystem
+- ✅ **Community Ownership**: No proprietary restrictions on usage
+
+### Contributor IP Requirements
+By contributing to EquiPath, you agree that:
+- Your contributions are original work or properly licensed
+- You grant patent-free rights to your contributions
+- You will not assert patent claims against project users
+- Your contributions align with MIT license terms
+
+
 ## 🚀 Getting Started
 
 ### Prerequisites
