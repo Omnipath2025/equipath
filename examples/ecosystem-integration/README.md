@@ -56,6 +56,9 @@ These examples showcase:
 
 ## 🛠️ Technical Implementation
 
+With this corrected version:
+
+```markdown
 ### Core Integration Pattern
 
 All examples follow this privacy-preserving pattern:
