@@ -79,7 +79,6 @@ const verification = await verifier.verifyWithoutReveal({
 if (verification.isValid) {
   await initiateEthicalCompensation(verification.attribution);
 }
-
 Privacy Guarantees
 
 Zero Knowledge: Cultural knowledge content never revealed on-chain
@@ -89,12 +88,10 @@ Audit Transparency: Complete compensation and usage tracking
 
 🚀 Getting Started
 Prerequisites
-npm install @equipath/sdk
+bashnpm install @equipath/sdk
 # Note: SDK will be available after ESP grant completion
-
 Running the Examples
-
-# Compile TypeScript examples
+bash# Compile TypeScript examples
 npx tsc examples/ecosystem-integration/*.ts
 
 # Run pharmaceutical example
@@ -105,7 +102,6 @@ node examples/ecosystem-integration/academic-research-platform.js
 
 # Run community preservation example
 node examples/ecosystem-integration/community-cultural-preservation.js
-
 🌍 Real-World Applications
 Enabled by EquiPath Infrastructure
 
