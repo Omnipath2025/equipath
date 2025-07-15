@@ -105,8 +105,8 @@ node examples/ecosystem-integration/academic-research-platform.js
 
 # Run community preservation example
 node examples/ecosystem-integration/community-cultural-preservation.js
---
-🌍 Real-World Applications
+
+##🌍 Real-World Applications
 Enabled by EquiPath Infrastructure
 
 🏥 Ethical Pharmaceutical R&D: Verify traditional medicinal knowledge without cultural exploitation
