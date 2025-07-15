@@ -60,79 +60,45 @@ These examples showcase:
 
 All examples follow this privacy-preserving pattern:
 
-```typescript
-// 1. Initialize EquiPath with appropriate settings
-const verifier = new EquiPathVerifier({
-  network: 'polygon', // or 'ethereum'
-  privacyLevel: 'maximum',
-  culturalProtection: true
-});
+1. Initialize EquiPath with appropriate settings
+2. Verify without revealing sensitive information  
+3. Trigger ethical compensation automatically
 
-// 2. Verify without revealing sensitive information
-const verification = await verifier.verifyWithoutReveal({
-  proof: zkProof,
-  culturalBoundaries: communitySettings,
-  intendedUse: 'research' // or 'commercial', 'academic'
-});
+### Privacy Guarantees
 
-// 3. Trigger ethical compensation automatically
-if (verification.isValid) {
-  await initiateEthicalCompensation(verification.attribution);
-}
-Privacy Guarantees
+- Zero Knowledge: Cultural knowledge content never revealed on-chain
+- Community Control: Knowledge holders maintain full control over access
+- Cultural Boundaries: Technical enforcement of sacred knowledge protection
+- Audit Transparency: Complete compensation and usage tracking
 
-Zero Knowledge: Cultural knowledge content never revealed on-chain
-Community Control: Knowledge holders maintain full control over access
-Cultural Boundaries: Technical enforcement of sacred knowledge protection
-Audit Transparency: Complete compensation and usage tracking
+## 🚀 Getting Started
 
-🚀 Getting Started
-Prerequisites
-bashnpm install @equipath/sdk
-# Note: SDK will be available after ESP grant completion
-Running the Examples
-bash# Compile TypeScript examples
-npx tsc examples/ecosystem-integration/*.ts
+### Prerequisites
+- npm install @equipath/sdk (available after ESP grant completion)
 
-# Run pharmaceutical example
-node examples/ecosystem-integration/pharmaceutical-ethical-sourcing.js
+### Running the Examples
+- Compile: npx tsc examples/ecosystem-integration/*.ts
+- Run pharmaceutical example: node pharmaceutical-ethical-sourcing.js
+- Run academic example: node academic-research-platform.js
+- Run community example: node community-cultural-preservation.js
 
-# Run academic research example  
-node examples/ecosystem-integration/academic-research-platform.js
+## 🌍 Real-World Applications
 
-# Run community preservation example
-node examples/ecosystem-integration/community-cultural-preservation.js
-🌍 Real-World Applications
-Enabled by EquiPath Infrastructure
+- Ethical Pharmaceutical R&D
+- Cross-Cultural Academic Research
+- Sustainable Agriculture
+- Legal Attribution Systems
+- Cultural Preservation
 
-🏥 Ethical Pharmaceutical R&D: Verify traditional medicinal knowledge without cultural exploitation
-🎓 Cross-Cultural Academic Research: Enable respectful research collaboration across cultures
-🌱 Sustainable Agriculture: Share traditional farming knowledge while respecting community rights
-⚖️ Legal Attribution Systems: Provide court-ready proof of knowledge ownership
-🏛️ Cultural Preservation: Digital preservation tools controlled by communities themselves
+## 📚 Next Steps
 
-Integration Opportunities
-EquiPath provides the privacy infrastructure foundation that enables:
+1. Review the Examples
+2. Join the Community
+3. Build Something
+4. Get Involved
 
-Ethical sourcing marketplaces
-Cultural exchange platforms
-Research collaboration tools
-Legal attribution systems
-Community-controlled knowledge repositories
+## 🤝 Contributing
 
-📚 Next Steps
-
-Review the Examples: Study the integration patterns and privacy protections
-Join the Community: Contribute to EquiPath development on GitHub
-Build Something: Create your own ethical application using EquiPath
-Get Involved: Help expand the ecosystem of privacy-preserving cultural applications
-
-🤝 Contributing
-We welcome contributions that expand the ecosystem of ethical applications:
-
-Additional integration examples
-Industry-specific implementations
-Community feedback on cultural sensitivity
-Documentation improvements
+We welcome contributions that expand the ecosystem of ethical applications.
 
 See CONTRIBUTING.md for guidelines.
