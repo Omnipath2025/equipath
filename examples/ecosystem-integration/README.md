@@ -56,9 +56,6 @@ These examples showcase:
 
 ## 🛠️ Technical Implementation
 
-With this corrected version:
-
-```markdown
 ### Core Integration Pattern
 
 All examples follow this privacy-preserving pattern:
@@ -82,6 +79,7 @@ const verification = await verifier.verifyWithoutReveal({
 if (verification.isValid) {
   await initiateEthicalCompensation(verification.attribution);
 }
+
 Privacy Guarantees
 
 Zero Knowledge: Cultural knowledge content never revealed on-chain
@@ -90,7 +88,6 @@ Cultural Boundaries: Technical enforcement of sacred knowledge protection
 Audit Transparency: Complete compensation and usage tracking
 
 🚀 Getting Started
-
 Prerequisites
 npm install @equipath/sdk
 # Note: SDK will be available after ESP grant completion
