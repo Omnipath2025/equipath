@@ -9,7 +9,7 @@
     "circuits:compile": "node scripts/setup/compile-circuits.js",
     "deploy:testnet": "hardhat run scripts/deploy/deploy-testnet.js --network sepolia",
     "benchmark": "node benchmarks/benchmark.js"
-}
+  },
   "author": "OmniPath Team",
   "license": "MIT",
   "dependencies": {
