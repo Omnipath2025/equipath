@@ -13,7 +13,7 @@ async function runBasicTest() {
         console.log('✅ Test 1: Ethers.js library loaded successfully');
         
         // Test 2: Create a provider using ethers v6 syntax
-        const provider = new ethers.JsonRpcProvider('https://eth-mainnet.alchemyapi.io/v2/demo');
+        const provider = new ethers.providers.JsonRpcProvider('https://eth-mainnet.alchemyapi.io/v2/demo');
         console.log('✅ Test 2: Provider created successfully');
         
         // Test 3: Generate a test wallet
@@ -23,13 +23,13 @@ async function runBasicTest() {
         
         // Test 4: Test hash generation (ethers v6 syntax)
         const testContent = 'Traditional medicinal knowledge about healing herbs';
-        const contentHash = ethers.keccak256(ethers.toUtf8Bytes(testContent));
+        const contentHash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(testContent));
         console.log('✅ Test 4: Knowledge content hashing');
         console.log(`   Content Hash: ${contentHash}`);
         
         // Test 5: Test cultural context encoding (ethers v6 syntax)
         const culturalContext = 'Indigenous-Healing-Traditions';
-        const contextBytes = ethers.encodeBytes32String(culturalContext);
+        const contextBytes = ethers.utils.formatBytes32String(culturalContext);
         console.log('✅ Test 5: Cultural context encoding');
         console.log(`   Context: ${culturalContext}`);
         console.log(`   Encoded: ${contextBytes}`);
@@ -46,7 +46,7 @@ async function runBasicTest() {
         console.log('✅ Test 6: Mock zk-SNARK proof structure created');
         
         // Test 7: Test event signature generation (ethers v6 syntax)
-        const eventSignature = ethers.id('ContributionVerified(uint256,bytes32,address,bytes32,uint256)');
+        const eventSignature = ethers.utils.id('ContributionVerified(uint256,bytes32,address,bytes32,uint256)');
         console.log('✅ Test 7: Smart contract event signature');
         console.log(`   Signature: ${eventSignature}`);
         
