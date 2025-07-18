@@ -292,7 +292,7 @@ def demo_traditional_medicine_protection():
     # Zero-knowledge proof (simulated)
     zk_proof = {
         "proof_a": [123, 456],
-        "proof_b": [[789, 012], [345, 678]],
+        "proof_b": [[789, 123], [345, 678]],
         "proof_c": [901, 234],
         "public_signals": [567, 890, 123]
     }
