@@ -6,6 +6,21 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 /**
+ * @title EquiPathVerifier - Blockchain Reference Implementation
+ * @dev Privacy-preserving traditional knowledge verification system
+ * @notice This is the blockchain deployment option for EquiPath platform
+ * 
+ * Platform Options:
+ * - Universal Python Implementation: See src/ directory for any database/platform
+ * - Blockchain Implementation: This Solidity contract for EVM-compatible chains
+ * - Hybrid Deployment: Combine both for maximum flexibility
+ * 
+ * Core Features:
+ * - Zero-knowledge proof verification for traditional knowledge
+ * - Community governance integration
+ * - Cryptographic attribution tracking  
+ * - Privacy-preserving compensation distribution
+ */
  * @title EquiPathVerifier
  * @dev Core smart contract for privacy-preserving traditional knowledge verification
  * @notice Integrates with zk-SNARK circuits to verify knowledge contributions
