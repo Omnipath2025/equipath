@@ -148,4 +148,65 @@ class AttributionTracker:
                                  cultural_context: str, 
                                  contribution_hash: str) -> str:
         """Generate attribution hash for compensation tracking"""
-        combined = f"{contributor_id}:{cultural_context}:{contri
+        combined = f"{contributor_id}:{cultural_context}:{contribution_hash}"
+        return hashlib.sha256(combined.encode()).hexdigest()
+        
+    def _persist_contribution(self, contribution: KnowledgeContribution):
+        """Persist contribution to storage backend"""
+        self.storage['contributions'][contribution.contribution_id] = asdict(contribution)
+
+class ProvenanceChain:
+    """
+    Provenance tracking for traditional knowledge usage
+    
+    Tracks:
+    - Who accessed knowledge when
+    - How knowledge was used
+    - Attribution requirements met
+    - Compensation flows
+    """
+    
+    def __init__(self):
+        self.access_logs: List[Dict] = []
+        self.usage_records: List[Dict] = []
+        
+    def log_knowledge_access(self, contribution_id: int, accessor_id: str, 
+                           access_purpose: str, permissions_granted: List[str]):
+        """Log access to traditional knowledge"""
+        access_record = {
+            'timestamp': time.time(),
+            'contribution_id': contribution_id,
+            'accessor_id': accessor_id,
+            'access_purpose': access_purpose,
+            'permissions_granted': permissions_granted
+        }
+        self.access_logs.append(access_record)
+        
+    def record_knowledge_usage(self, contribution_id: int, usage_type: str, 
+                             research_outcome: str, commercial_application: str = None):
+        """Record how traditional knowledge was used"""
+        usage_record = {
+            'timestamp': time.time(),
+            'contribution_id': contribution_id,
+            'usage_type': usage_type,
+            'research_outcome': research_outcome,
+            'commercial_application': commercial_application
+        }
+        self.usage_records.append(usage_record)
+        
+    def get_provenance_chain(self, contribution_id: int) -> Dict:
+        """Get complete provenance chain for a contribution"""
+        access_history = [log for log in self.access_logs 
+                         if log['contribution_id'] == contribution_id]
+        usage_history = [record for record in self.usage_records 
+                        if record['contribution_id'] == contribution_id]
+        
+        return {
+            'contribution_id': contribution_id,
+            'access_history': access_history,
+            'usage_history': usage_history,
+            'total_accesses': len(access_history),
+            'total_usages': len(usage_history)
+        }
+
+__all__ = ['AttributionTracker', 'ProvenanceChain', 'KnowledgeContribution']
