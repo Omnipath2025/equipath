@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-380/)
-[![Blockchain: Ethereum](https://img.shields.io/badge/blockchain-Ethereum-purple.svg)](https://ethereum.org/)
+[![Blockchain: Multi-Chain](https://img.shields.io/badge/blockchain-Multi--Chain-purple.svg)](https://github.com/Omnipath2025/equipath)
 [![Status: Development](https://img.shields.io/badge/status-development-orange.svg)](https://github.com/Omnipath2025/equipath)
 
 ## Overview
@@ -33,8 +33,8 @@ Existing approaches to traditional knowledge compensation suffer from:
 
 ## EquiPath Solution Architecture
 
-### 🔗 Blockchain-Based Attribution Tracking
-EquiPath utilizes advanced blockchain technology to create immutable records of traditional knowledge contributions:
+### 🔗 Multi-Chain Attribution Tracking
+EquiPath utilizes multiple blockchain networks optimized for social impact to create immutable records of traditional knowledge contributions:
 
 ```python
 class TraditionalKnowledgeContribution:
@@ -135,30 +135,67 @@ class AttributionEngine:
         return self.normalize_attribution_weights(weights)
 ```
 
-#### 2. Blockchain Integration Layer
+#### 2. Multi-Chain Integration Layer
 ```python
-class BlockchainIntegration:
+class MultiChainIntegration:
     """
-    Ethereum-based smart contracts for transparent compensation
+    Multi-blockchain smart contracts optimized for social impact and low transaction costs
     """
-    def __init__(self, network="ethereum_mainnet"):
-        self.network = network
-        self.smart_contracts = {
-            "compensation_distributor": "0x742d35Cc6065Df1eE5b0D2d1...",
-            "attribution_registry": "0x1a2b3c4d5e6f7g8h9i0j1k2l3m...",
-            "community_governance": "0x9z8y7x6w5v4u3t2s1r0q9p8o7n..."
+    def __init__(self):
+        self.supported_networks = {
+            "polygon": {
+                "purpose": "Primary compensation distribution",
+                "advantages": "Low cost, high throughput, social impact focus",
+                "smart_contracts": {
+                    "compensation_distributor": "0x742d35Cc6065Df1eE5b0D2d1...",
+                    "attribution_registry": "0x1a2b3c4d5e6f7g8h9i0j1k2l3m...",
+                    "community_governance": "0x9z8y7x6w5v4u3t2s1r0q9p8o7n..."
+                }
+            },
+            "algorand": {
+                "purpose": "Environmental sustainability tracking", 
+                "advantages": "Carbon-negative, very low cost, sustainability focus",
+                "smart_contracts": {
+                    "sustainability_metrics": "ALGO_APP_ID_12345",
+                    "environmental_impact": "ALGO_APP_ID_67890"
+                }
+            },
+            "cardano": {
+                "purpose": "Developing world partnerships",
+                "advantages": "Strong developing world focus, academic rigor",
+                "smart_contracts": {
+                    "global_partnerships": "CARDANO_SCRIPT_HASH_123",
+                    "education_attribution": "CARDANO_SCRIPT_HASH_456"
+                }
+            }
         }
         
     def create_compensation_record(self, contribution_data):
         """
-        Create immutable blockchain record of contribution and compensation rights
+        Create immutable record across multiple chains for redundancy and optimization
         """
-        return self.deploy_smart_contract({
+        optimal_chain = self.select_optimal_chain(contribution_data)
+        
+        return self.deploy_smart_contract(optimal_chain, {
             "contributor_wallet": contribution_data.community_wallet,
             "attribution_percentage": contribution_data.compensation_share,
             "knowledge_hash": contribution_data.create_knowledge_fingerprint(),
-            "validation_signatures": contribution_data.community_signatures
+            "validation_signatures": contribution_data.community_signatures,
+            "cross_chain_verification": self.create_cross_chain_proof()
         })
+        
+    def select_optimal_chain(self, contribution_data):
+        """
+        Select optimal blockchain based on transaction type and community needs
+        """
+        if contribution_data.transaction_frequency == "high":
+            return "polygon"  # Low cost for frequent micropayments
+        elif contribution_data.environmental_focus:
+            return "algorand"  # Carbon-negative for sustainability projects
+        elif contribution_data.developing_world:
+            return "cardano"  # Strong developing world partnerships
+        else:
+            return "polygon"  # Default to cost-effective option
 ```
 
 #### 3. Community Governance Protocol
@@ -296,11 +333,16 @@ class ResearchIntegration:
 
 #### 1. Install EquiPath
 ```bash
-# Install the EquiPath compensation system
+# Install the EquiPath multi-chain compensation system
 pip install equipath
 
-# Initialize blockchain connection
-equipath init --network ethereum_mainnet --wallet your_wallet_address
+# Initialize multi-chain connection (auto-selects optimal network)
+equipath init --auto-select-network --wallet your_wallet_address
+
+# Or specify preferred network for your use case
+equipath init --network polygon --wallet your_wallet_address  # Low-cost micropayments
+equipath init --network algorand --wallet your_wallet_address  # Environmental focus
+equipath init --network cardano --wallet your_wallet_address  # Developing world partnerships
 ```
 
 #### 2. Register Traditional Knowledge Contribution
